@@ -1,0 +1,18 @@
+PODS:
+  - BmobSDK (2.2.3):
+    - WechatOpenSDK (~> 1.7.7)
+  - SVProgressHUD (2.2.2)
+  - WechatOpenSDK (1.7.9)
+
+DEPENDENCIES:
+  - BmobSDK
+  - SVProgressHUD
+
+SPEC CHECKSUMS:
+  BmobSDK: dd61cf835d063303fb53b29465fcb3e9718b36f2
+  SVProgressHUD: 59b2d3dabacbd051576d21d32293ca7228dc18b0
+  WechatOpenSDK: 1fe7e3b07db860d6a936c3ff4a5aba6b890958d9
+
+PODFILE CHECKSUM: d205e520579a9447474cce5cd00a0694be216a24
+
+COCOAPODS: 1.4.0.beta.2

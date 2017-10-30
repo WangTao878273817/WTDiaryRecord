@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040684BC1FA7618E00C0377A /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 040684BB1FA7618E00C0377A /* Account.storyboard */; };
+		042131801FA768280099B8A4 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0421317F1FA768280099B8A4 /* AccountViewController.swift */; };
 		0CC480B88AB0D09A7E5B7416 /* Pods_DiaryRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F1CA244A6A877A1AB9C0B35 /* Pods_DiaryRecord.framework */; };
 		7857919D1FA70EE300A60D14 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857919C1FA70EE300A60D14 /* MainTabbarController.swift */; };
 		7857919F1FA7221300A60D14 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7857919E1FA7221200A60D14 /* Home.storyboard */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040684BB1FA7618E00C0377A /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
+		0421317F1FA768280099B8A4 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = DiaryRecord/Account/ViewController/AccountViewController.swift; sourceTree = SOURCE_ROOT; };
 		4245539A61A2CFE1ECF6A8B8 /* Pods-DiaryRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryRecord.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryRecord/Pods-DiaryRecord.debug.xcconfig"; sourceTree = "<group>"; };
 		5BC8514AC76B07E11E5C2931 /* Pods-DiaryRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryRecord.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryRecord/Pods-DiaryRecord.release.xcconfig"; sourceTree = "<group>"; };
 		7857919C1FA70EE300A60D14 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
@@ -56,6 +60,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		042131811FA768730099B8A4 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				042131821FA7688E0099B8A4 /* ViewController */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		042131821FA7688E0099B8A4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0421317F1FA768280099B8A4 /* AccountViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		32B5CC018A1121DE0BF983CC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,7 +130,7 @@
 				78863CF31FA327350040B1B8 /* Tools */,
 				7888CF7B1F9F1D97006C5CB1 /* StoryBoard */,
 				7888CF7F1F9F2016006C5CB1 /* Login */,
-				7888CF7E1F9F1F89006C5CB1 /* Account */,
+				042131811FA768730099B8A4 /* Account */,
 				7888CF7D1F9F1F38006C5CB1 /* Write */,
 				7888CF7C1F9F1E00006C5CB1 /* Home */,
 			);
@@ -122,6 +142,7 @@
 			children = (
 				7888CF6D1F9F1374006C5CB1 /* Main.storyboard */,
 				7857919E1FA7221200A60D14 /* Home.storyboard */,
+				040684BB1FA7618E00C0377A /* Account.storyboard */,
 			);
 			path = StoryBoard;
 			sourceTree = "<group>";
@@ -138,13 +159,6 @@
 			children = (
 			);
 			path = Write;
-			sourceTree = "<group>";
-		};
-		7888CF7E1F9F1F89006C5CB1 /* Account */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Account;
 			sourceTree = "<group>";
 		};
 		7888CF7F1F9F2016006C5CB1 /* Login */ = {
@@ -249,6 +263,7 @@
 			files = (
 				7857919F1FA7221300A60D14 /* Home.storyboard in Resources */,
 				7888CF711F9F1375006C5CB1 /* Assets.xcassets in Resources */,
+				040684BC1FA7618E00C0377A /* Account.storyboard in Resources */,
 				7888CF6F1F9F1374006C5CB1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,6 +338,7 @@
 				78863CEF1FA2FEB30040B1B8 /* Utils.swift in Sources */,
 				78863CF11FA306D20040B1B8 /* Object-getAttribute.swift in Sources */,
 				7857919D1FA70EE300A60D14 /* MainTabbarController.swift in Sources */,
+				042131801FA768280099B8A4 /* AccountViewController.swift in Sources */,
 				7888CF6A1F9F1374006C5CB1 /* AppDelegate.swift in Sources */,
 				78863CEB1FA1CED90040B1B8 /* UserModel.swift in Sources */,
 				7888CF831F9F21D6006C5CB1 /* DefineHeader.swift in Sources */,

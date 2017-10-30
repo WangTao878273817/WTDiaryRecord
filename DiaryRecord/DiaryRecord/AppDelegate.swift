@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// SVProgressHUD Config
     func configSVProgress(){
         SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.clear)
-        SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.light)
+        SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.dark)
         SVProgressHUD.setMinimumDismissTimeInterval(2)
     }
     

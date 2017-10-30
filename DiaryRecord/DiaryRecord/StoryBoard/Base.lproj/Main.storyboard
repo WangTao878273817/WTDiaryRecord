@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -80,7 +80,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done" secureTextEntry="YES"/>
                                             </textField>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <userDefinedRuntimeAttributes>
@@ -125,7 +125,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.96567231416702271" green="0.96559685468673706" blue="0.96253782510757446" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="nicai" id="xfm-EH-OUX"/>
                     <connections>
@@ -137,32 +137,13 @@
                         <outlet property="textBgView" destination="yIy-Kx-sbk" id="XVK-9T-hvF"/>
                         <outlet property="textView" destination="Rgc-yh-BxT" id="f4l-o4-jW1"/>
                         <outlet property="titleLab" destination="Akr-KJ-Sa0" id="WrX-xy-uZQ"/>
-                        <segue destination="pxy-Sm-QcO" kind="push" identifier="loginToHome" id="74H-hy-Mf4"/>
-                        <segue destination="pxy-Sm-QcO" kind="push" identifier="loginToHome2" animates="NO" id="CS3-TU-Wdw"/>
+                        <segue destination="pxy-Sm-QcO" kind="show" identifier="loginToHome" id="74H-hy-Mf4"/>
+                        <segue destination="pxy-Sm-QcO" kind="show" identifier="loginToHome2" animates="NO" id="CS3-TU-Wdw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-208" y="371"/>
-        </scene>
-        <!--我的-->
-        <scene sceneID="xPY-6E-VZW">
-            <objects>
-                <viewController id="tRo-mi-Ehn" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mNg-wl-uhE"/>
-                        <viewControllerLayoutGuide type="bottom" id="xv4-z7-hbV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="AHg-2g-6pM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="我的" image="tabbar_account_nomal" selectedImage="tabbar_account_select" id="GZl-sk-EuB"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QEY-S4-0gs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1446" y="774"/>
         </scene>
         <!--Home-->
         <scene sceneID="kfr-HJ-I9G">
@@ -172,7 +153,17 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SgV-2b-6mf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1300" y="133"/>
+            <point key="canvasLocation" x="1209" y="150"/>
+        </scene>
+        <!--Account-->
+        <scene sceneID="8fh-jc-Tfc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Account" id="efr-HC-pXA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="QYU-fX-Voy"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mO7-uH-U5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1222" y="316"/>
         </scene>
         <!--Main Tabbar Controller-->
         <scene sceneID="EeW-zP-8Sl">
@@ -186,7 +177,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="qH8-9h-g0h" kind="relationship" relationship="viewControllers" id="B2s-jG-2UX"/>
-                        <segue destination="tRo-mi-Ehn" kind="relationship" relationship="viewControllers" id="e8d-cm-x4C"/>
+                        <segue destination="efr-HC-pXA" kind="relationship" relationship="viewControllers" id="rmi-3v-jl1"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G3s-gr-lfH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -217,10 +208,8 @@
         <image name="icon_email" width="16" height="16"/>
         <image name="icon_name" width="16" height="16"/>
         <image name="icon_password" width="16" height="16"/>
-        <image name="tabbar_account_nomal" width="30" height="30"/>
-        <image name="tabbar_account_select" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="74H-hy-Mf4"/>
+        <segue reference="CS3-TU-Wdw"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -164,24 +164,15 @@
             </objects>
             <point key="canvasLocation" x="1446" y="774"/>
         </scene>
-        <!--首页-->
-        <scene sceneID="qwN-Ad-8hu">
+        <!--Home-->
+        <scene sceneID="kfr-HJ-I9G">
             <objects>
-                <viewController id="co3-a6-Zzl" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4dH-hq-huQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="3QV-Nh-yPo"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ori-3J-dLM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="首页" image="tabbar_home_nomal" selectedImage="tabbar_home_select" id="scz-cY-hml"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VUI-e6-Q9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardIdentifier="HomeStoryBoardId" storyboardName="Home" id="qH8-9h-g0h" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="tJO-b9-jmB"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SgV-2b-6mf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1446" y="-4"/>
+            <point key="canvasLocation" x="1300" y="133"/>
         </scene>
         <!--Main Tabbar Controller-->
         <scene sceneID="EeW-zP-8Sl">
@@ -194,7 +185,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="co3-a6-Zzl" kind="relationship" relationship="viewControllers" id="zNK-nJ-G5d"/>
+                        <segue destination="qH8-9h-g0h" kind="relationship" relationship="viewControllers" id="B2s-jG-2UX"/>
                         <segue destination="tRo-mi-Ehn" kind="relationship" relationship="viewControllers" id="e8d-cm-x4C"/>
                     </connections>
                 </tabBarController>
@@ -228,10 +219,8 @@
         <image name="icon_password" width="16" height="16"/>
         <image name="tabbar_account_nomal" width="30" height="30"/>
         <image name="tabbar_account_select" width="30" height="30"/>
-        <image name="tabbar_home_nomal" width="30" height="30"/>
-        <image name="tabbar_home_select" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CS3-TU-Wdw"/>
+        <segue reference="74H-hy-Mf4"/>
     </inferredMetricsTieBreakers>
 </document>

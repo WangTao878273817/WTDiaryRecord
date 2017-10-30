@@ -18,10 +18,10 @@ class Utils: NSObject {
     
     ///获取保存的用户信息
     static func getUserInfo() -> UserModel? {
-        let resultDic : Dictionary<String,String> = USERDEFAUTS.object(forKey: USERDEFAUTS_KEY_USERMODEL) as! Dictionary<String,String>
-        if(resultDic.count <= 0 ){
-            return nil
-        }
+        let resultDic : Dictionary<String,String>? = USERDEFAUTS.object(forKey: USERDEFAUTS_KEY_USERMODEL) as? Dictionary<String, String>
+//        if(resultDic?.count <= 0 ){
+//            return nil
+//        }
         return UserModel.init(dic: resultDic)
     }
     

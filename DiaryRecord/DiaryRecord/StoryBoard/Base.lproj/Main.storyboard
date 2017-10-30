@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rHV-75-gNR">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--登录注册-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="DiaryRecord" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="登录注册" id="BYZ-38-t0r" customClass="LoginViewController" customModule="DiaryRecord" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="s2L-RK-Stc"/>
                         <viewControllerLayoutGuide type="bottom" id="eG3-3g-oPG"/>
@@ -127,6 +127,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96567231416702271" green="0.96559685468673706" blue="0.96253782510757446" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" title="nicai" id="xfm-EH-OUX"/>
                     <connections>
                         <outlet property="emailTxf" destination="es3-8E-jSC" id="OZD-Cl-8bl"/>
                         <outlet property="loginButton" destination="rf7-n0-Hgk" id="HUH-Xe-Ivz"/>
@@ -136,16 +137,101 @@
                         <outlet property="textBgView" destination="yIy-Kx-sbk" id="XVK-9T-hvF"/>
                         <outlet property="textView" destination="Rgc-yh-BxT" id="f4l-o4-jW1"/>
                         <outlet property="titleLab" destination="Akr-KJ-Sa0" id="WrX-xy-uZQ"/>
+                        <segue destination="pxy-Sm-QcO" kind="push" identifier="loginToHome" id="74H-hy-Mf4"/>
+                        <segue destination="pxy-Sm-QcO" kind="push" identifier="loginToHome2" animates="NO" id="CS3-TU-Wdw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116" y="118.29085457271366"/>
+            <point key="canvasLocation" x="-208" y="371"/>
+        </scene>
+        <!--我的-->
+        <scene sceneID="xPY-6E-VZW">
+            <objects>
+                <viewController id="tRo-mi-Ehn" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mNg-wl-uhE"/>
+                        <viewControllerLayoutGuide type="bottom" id="xv4-z7-hbV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AHg-2g-6pM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="我的" image="tabbar_account_nomal" selectedImage="tabbar_account_select" id="GZl-sk-EuB"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QEY-S4-0gs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1446" y="774"/>
+        </scene>
+        <!--首页-->
+        <scene sceneID="qwN-Ad-8hu">
+            <objects>
+                <viewController id="co3-a6-Zzl" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4dH-hq-huQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="3QV-Nh-yPo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ori-3J-dLM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="首页" image="tabbar_home_nomal" selectedImage="tabbar_home_select" id="scz-cY-hml"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VUI-e6-Q9h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1446" y="-4"/>
+        </scene>
+        <!--Main Tabbar Controller-->
+        <scene sceneID="EeW-zP-8Sl">
+            <objects>
+                <tabBarController id="pxy-Sm-QcO" customClass="MainTabbarController" customModule="DiaryRecord" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="pEb-vd-G5m"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="u7g-Yn-bhs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="co3-a6-Zzl" kind="relationship" relationship="viewControllers" id="zNK-nJ-G5d"/>
+                        <segue destination="tRo-mi-Ehn" kind="relationship" relationship="viewControllers" id="e8d-cm-x4C"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G3s-gr-lfH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="623" y="371"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="s9L-9J-lOl">
+            <objects>
+                <navigationController id="rHV-75-gNR" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9mf-yk-2f6">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="TA6-n8-Cck"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iah-GX-TjQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-894" y="371"/>
         </scene>
     </scenes>
     <resources>
         <image name="icon_email" width="16" height="16"/>
         <image name="icon_name" width="16" height="16"/>
         <image name="icon_password" width="16" height="16"/>
+        <image name="tabbar_account_nomal" width="30" height="30"/>
+        <image name="tabbar_account_select" width="30" height="30"/>
+        <image name="tabbar_home_nomal" width="30" height="30"/>
+        <image name="tabbar_home_select" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="CS3-TU-Wdw"/>
+    </inferredMetricsTieBreakers>
 </document>

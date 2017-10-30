@@ -18,10 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        self.configStartDuration()
         self.configBmob()
         self.configSVProgress()
         
         return true
+    }
+    
+    ///启动时间
+    func configStartDuration(){
+        Thread.sleep(forTimeInterval: 1)
     }
     
     // MARK: - Config SDK

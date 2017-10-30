@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0CC480B88AB0D09A7E5B7416 /* Pods_DiaryRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F1CA244A6A877A1AB9C0B35 /* Pods_DiaryRecord.framework */; };
+		7857919D1FA70EE300A60D14 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857919C1FA70EE300A60D14 /* MainTabbarController.swift */; };
 		78863CEB1FA1CED90040B1B8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78863CEA1FA1CED90040B1B8 /* UserModel.swift */; };
 		78863CED1FA1E0250040B1B8 /* LoginDataManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78863CEC1FA1E0250040B1B8 /* LoginDataManage.swift */; };
 		78863CEF1FA2FEB30040B1B8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78863CEE1FA2FEB30040B1B8 /* Utils.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		4245539A61A2CFE1ECF6A8B8 /* Pods-DiaryRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryRecord.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryRecord/Pods-DiaryRecord.debug.xcconfig"; sourceTree = "<group>"; };
 		5BC8514AC76B07E11E5C2931 /* Pods-DiaryRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryRecord.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryRecord/Pods-DiaryRecord.release.xcconfig"; sourceTree = "<group>"; };
+		7857919C1FA70EE300A60D14 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		78863CE81FA1BB090040B1B8 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		78863CEA1FA1CED90040B1B8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		78863CEC1FA1E0250040B1B8 /* LoginDataManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataManage.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				78CB615F1FA0370E00A36F13 /* LoginViewController.swift */,
+				7857919C1FA70EE300A60D14 /* MainTabbarController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				78D607B31FA0AEE600B85611 /* CALayer_ConfigColor.swift in Sources */,
 				78863CEF1FA2FEB30040B1B8 /* Utils.swift in Sources */,
 				78863CF11FA306D20040B1B8 /* Object-getAttribute.swift in Sources */,
+				7857919D1FA70EE300A60D14 /* MainTabbarController.swift in Sources */,
 				7888CF6A1F9F1374006C5CB1 /* AppDelegate.swift in Sources */,
 				78863CEB1FA1CED90040B1B8 /* UserModel.swift in Sources */,
 				7888CF831F9F21D6006C5CB1 /* DefineHeader.swift in Sources */,

@@ -22,15 +22,30 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.configController()
+        
+    }
+    
+    ///设置视图
+    func configController(){
+        
+        self.navigationController?.isNavigationBarHidden = true
+        let userModel = Utils.getUserInfo()
+        if(userModel!.email != nil && userModel!.email != ""){
+            self.performSegue(withIdentifier: "loginToHome2", sender: "selfs")
+        }
+        
     }
 
-    
     @IBAction func switchLoginStaut(_ sender: Any) {
+        
         isLoginView = !isLoginView
         self.inputViewStartAnimation(isLogin: isLoginView)
+        
     }
     @IBAction func loginBtnClick(_ sender: Any) {
+        
         self.cancleFristResponse()
         
         let inputResult = self.judgeInput()
@@ -47,18 +62,23 @@ class LoginViewController: UIViewController {
         
     }
     
+    
     // MARK: - Login And Regist
     func login(){
+        
         let ldManage = LoginDataManage.shared
         ldManage.loginQuery(email:self.emailTxf.text! , pwd: self.pwdTxf.text!) { (isSuccess, msg) in
             if(isSuccess){
-                SVProgressHUD.showSuccess(withStatus: msg)
+                SVProgressHUD.dismiss()
+                self.performSegue(withIdentifier: "loginToHome", sender: "selfs")
             }else{
                 SVProgressHUD.showError(withStatus: msg)
             }
         }
+        
     }
     func regist(){
+        
         let ldManage = LoginDataManage.shared
         ldManage.registInstall(name: self.nameTxf.text!, email: self.emailTxf.text!, pwd: self.pwdTxf.text!) { (isSuccess, msg) in
             if(isSuccess){
@@ -67,6 +87,7 @@ class LoginViewController: UIViewController {
                 SVProgressHUD.showError(withStatus: msg)
             }
         }
+        
     }
     
     ///判读输入是否正确
@@ -89,14 +110,17 @@ class LoginViewController: UIViewController {
     
     ///取消第一相应
     func cancleFristResponse() {
+        
         self.nameTxf.resignFirstResponder()
         self.emailTxf.resignFirstResponder()
         self.pwdTxf.resignFirstResponder()
+        
     }
     
     
     //MARK: - Animation
     func inputViewStartAnimation(isLogin : Bool) {
+        
         UIView.animate(withDuration: 0.3) {
             var bgViewRect : CGRect = self.textBgView.frame;
             bgViewRect.size.height=(isLogin ? 100 : 150)

@@ -8,13 +8,61 @@
 
 import UIKit
 
-class AccountViewController: UIViewController {
-
+class AccountViewController: UIViewController,UIScrollViewDelegate {
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var userIcon: UIImageView!
+    @IBOutlet weak var accountBgImage: UIImageView!
+    var bgShapeLayer : CAShapeLayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.configViewController()
+    
+        
     }
+    
+    ///初始化配置视图
+    func configViewController(){
+        
+        self.scrollView.contentSize=self.view.frame.size
+        self.scrollView.contentOffset=CGPoint.init(x: 0, y: 0 )
+        
+        self.userIcon.layer.borderColor=UIColor.white.cgColor
+        self.configWhiteBgLayer()
+    }
+    
+    ///配置遮挡layer
+    func configWhiteBgLayer(){
+        
+        self.bgShapeLayer = CAShapeLayer.init()
+        self.bgShapeLayer!.fillColor=UIColor.white.cgColor
+        self.bgShapeLayer!.path=self.getBeizerPathWithY(y: self.scrollView.contentOffset.y)
+        self.accountBgImage.layer.addSublayer(self.bgShapeLayer!)
+        
+    }
+    
+    func getBeizerPathWithY(y : CGFloat) -> CGPath {
+        
+        let moveSize : CGFloat = (y + 20)
+        let beizerPath : UIBezierPath = UIBezierPath.init()
+        beizerPath.move(to: CGPoint.init(x: 0, y: 320))
+        beizerPath.addLine(to: CGPoint.init(x: 0, y: 450))
+        beizerPath.addLine(to: CGPoint.init(x: Int(SCREEN_WIDTH), y: 450))
+        beizerPath.addLine(to: CGPoint.init(x: Int(SCREEN_WIDTH), y: 320))
+        beizerPath.addQuadCurve(to: CGPoint.init(x: 0, y: 320), controlPoint: CGPoint.init(x: Int(SCREEN_WIDTH/2), y: Int(360-moveSize)))
+        beizerPath.lineCapStyle=CGLineCap.round
+        beizerPath.lineJoinStyle=CGLineJoin.round
+        return beizerPath.cgPath
+        
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.bgShapeLayer?.path = self.getBeizerPathWithY(y: scrollView.contentOffset.y)
+//        self.bgShapeLayer.n
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

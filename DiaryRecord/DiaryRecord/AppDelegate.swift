@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     ///启动时间
     func configStartDuration(){
-        Thread.sleep(forTimeInterval: 1)
+//        Thread.sleep(forTimeInterval: 1)
     }
     
     // MARK: - Config SDK

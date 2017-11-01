@@ -23,7 +23,7 @@ class AccountDataManage: NSObject {
         }
     }
     
-    
+    ///获取用户数量信息
     func getAccountInfo(complent :((Dictionary<String,String>) -> Void)!){
         
         var resultDic : Dictionary<String,String> = Dictionary.init()
@@ -34,9 +34,9 @@ class AccountDataManage: NSObject {
         group.enter()
         queue.async {       ///请求日记数量
             let query : BmobQuery = BmobQuery.init(className: LIST_DIARYLIST)
-            query.whereKey("userId", equalTo: self.userModel.userId)
+            query.whereKey("userId", equalTo: Int(self.userModel.userId!))
             query .findObjectsInBackground { (array, error) in
-                if(array == nil && error == nil ){
+                if(array != nil && error == nil ){
                     resultDic["diaryCount"]="\(array!.count)"
                 }else{
                    resultDic["diaryCount"]="0"
@@ -49,9 +49,9 @@ class AccountDataManage: NSObject {
         group.enter()
         queue.async {       ///请求日记本数量
             let query : BmobQuery = BmobQuery.init(className: LIST_NOTEPADLIST)
-            query.whereKey("userId", equalTo: self.userModel.userId)
+            query.whereKey("userId", equalTo: Int(self.userModel.userId!))
             query .findObjectsInBackground { (array, error) in
-                if(array == nil && error == nil ){
+                if(array != nil && error == nil ){
                     resultDic["notepadCount"]="\(array!.count)"
                 }else{
                     resultDic["notepadCount"]="0"
@@ -64,9 +64,9 @@ class AccountDataManage: NSObject {
         group.enter()
         queue.async {       ///请求关注数量
             let query : BmobQuery = BmobQuery.init(className: LIST_CONCERNLIST)
-            query.whereKey("userId", equalTo: self.userModel.userId)
+            query.whereKey("userId", equalTo: Int(self.userModel.userId!))
             query .findObjectsInBackground { (array, error) in
-                if(array == nil && error == nil ){
+                if(array != nil && error == nil ){
                     resultDic["concernCount"]="\(array!.count)"
                 }else{
                     resultDic["concernCount"]="0"
@@ -81,4 +81,16 @@ class AccountDataManage: NSObject {
         
     }
     
+    ///上传文件（测试头像上传）
+    func updateUserIcon(){
+        
+        let updateData : Data = UIImagePNGRepresentation(UIImage.init(named: "account_default_icon")!)!
+        let bmobFile : BmobFile = BmobFile.init(fileName: "user.png", withFileData: updateData)
+        bmobFile.saveInBackground { (isSuccess, errer) in
+            
+            print("staut-\(isSuccess)---url-\(bmobFile.url)")
+            
+        }
+        
+    }
 }

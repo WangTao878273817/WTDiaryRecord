@@ -20,3 +20,8 @@ let BMOB_KEY : String = "024446707f380bbb8af746331b051cd8"
 
 ///Bmob UserList
 let LIST_USERLIST : String = "userList"
+let LIST_DIARYLIST : String = "diaryList"
+let LIST_NOTEPADLIST : String = "notepadList"
+let LIST_COMMENTLIST : String = "commentList"
+let LIST_CONCERNLIST : String = "concernList"
+

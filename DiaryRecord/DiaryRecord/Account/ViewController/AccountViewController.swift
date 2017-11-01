@@ -19,7 +19,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         super.viewDidLoad()
 
         self.configViewController()
-    
+        self.requestAccountInfo()
         
     }
     
@@ -63,6 +63,19 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
     @IBAction func settingBtnClick(_ sender: Any) {
         print("click setting")
     }
+    
+    
+    
+    // MARK: - request
+    ///获取 Account Info
+    func requestAccountInfo(){
+        let accManage = AccountDataManage.share
+        accManage.userModel = Utils.getUserInfo()!
+        accManage.getAccountInfo { (dataDic) in
+                print("request complent -- \(dataDic)")
+        }
+    }
+    
     //MARK: - scorllview delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         

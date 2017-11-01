@@ -26,7 +26,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
     ///初始化配置视图
     func configViewController(){
         
-        self.scrollView.contentSize=self.view.frame.size
+        self.scrollView.contentSize=CGSize.init(width: CGFloat(SCREEN_WIDTH), height: self.view.frame.size.height-64)
         self.scrollView.contentOffset=CGPoint.init(x: 0, y: 0 )
         
         self.userIcon.layer.borderColor=UIColor.white.cgColor
@@ -43,9 +43,11 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         
     }
     
+    ///获取bg layer的绘制path
     func getBeizerPathWithY(y : CGFloat) -> CGPath {
         
-        let moveSize : CGFloat = (y + 20)
+        var moveSize : CGFloat = (y + 20)
+        moveSize = (moveSize>=0 ? 0 : moveSize)
         let beizerPath : UIBezierPath = UIBezierPath.init()
         beizerPath.move(to: CGPoint.init(x: 0, y: 320))
         beizerPath.addLine(to: CGPoint.init(x: 0, y: 450))
@@ -58,9 +60,14 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         
     }
     
+    @IBAction func settingBtnClick(_ sender: Any) {
+        print("click setting")
+    }
+    //MARK: - scorllview delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         self.bgShapeLayer?.path = self.getBeizerPathWithY(y: scrollView.contentOffset.y)
-//        self.bgShapeLayer.n
+        
     }
     
 

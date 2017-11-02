@@ -13,14 +13,23 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var userIcon: UIImageView!
     @IBOutlet weak var accountBgImage: UIImageView!
+    @IBOutlet weak var nameLab: UILabel!
+    @IBOutlet weak var concernLab: UILabel!
+    @IBOutlet weak var diaryLab: UILabel!
+    @IBOutlet weak var notepadLab: UILabel!
+    @IBOutlet weak var sunLab: UILabel!
+    
     var bgShapeLayer : CAShapeLayer?
+    let accManage = AccountDataManage.share
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.configViewController()
+        self.settingAccountInfo()
         self.requestAccountInfo()
         
+        accManage.updateUserIcon()
     }
     
     ///初始化配置视图
@@ -60,6 +69,26 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         
     }
     
+    ///设置用户信息(用户头像以及名称)
+    func settingAccountInfo(){
+        let userModel : UserModel = Utils.getUserInfo()!
+        self.nameLab.text = userModel.name
+        if(userModel.imageUrl != nil && userModel.imageUrl != ""){
+//            self.userIcon.image = UIImage.init()
+        }
+    }
+    
+    ///设置用户数据
+    func settingAccountData(dataDic : Dictionary<String,String>){
+        
+        if(dataDic.count <= 0) {return}
+        self.diaryLab.text=dataDic["diaryCount"]
+        self.notepadLab.text=dataDic["notepadCount"]
+        self.concernLab.text=dataDic["concernCount"]
+        self.sunLab.text=(dataDic["sunCount"] == nil ? "0" : dataDic["sunCount"])
+        
+    }
+    
     @IBAction func settingBtnClick(_ sender: Any) {
         print("click setting")
     }
@@ -69,10 +98,9 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
     // MARK: - request
     ///获取 Account Info
     func requestAccountInfo(){
-        let accManage = AccountDataManage.share
-        accManage.userModel = Utils.getUserInfo()!
+        
         accManage.getAccountInfo { (dataDic) in
-                print("request complent -- \(dataDic)")
+                self.settingAccountData(dataDic: dataDic)
         }
     }
     

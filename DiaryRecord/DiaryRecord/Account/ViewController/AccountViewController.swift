@@ -29,7 +29,6 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         self.settingAccountInfo()
         self.requestAccountInfo()
         
-        accManage.updateUserIcon()
     }
     
     ///初始化配置视图
@@ -74,7 +73,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         let userModel : UserModel = Utils.getUserInfo()!
         self.nameLab.text = userModel.name
         if(userModel.imageUrl != nil && userModel.imageUrl != ""){
-//            self.userIcon.image = UIImage.init()
+            self.userIcon.sd_setImage(with: URL.init(string: userModel.imageUrl!))
         }
     }
     
@@ -89,8 +88,20 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         
     }
     
+    ///点击设置按钮
     @IBAction func settingBtnClick(_ sender: Any) {
         print("click setting")
+    }
+    
+    ///点击小项按钮
+    @IBAction func itemBtnClick(_ sender: UIButton) {
+
+        switch sender.tag {
+        case 5:
+            self.performSegue(withIdentifier: "editInfoIdentifier", sender: "selfss")
+        default:
+            print("click other btn \(sender.tag)")
+        }
     }
     
     

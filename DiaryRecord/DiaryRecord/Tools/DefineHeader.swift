@@ -9,8 +9,10 @@
 import UIKit
 
 ///Common Definal
-let SCREEN_WIDTH : Float = Float(UIScreen.main.bounds.size.width)
-let SCREEN_HEIGHT : Float = Float(UIScreen.main.bounds.size.height)
+let SCREEN_WIDTH : CGFloat = UIScreen.main.bounds.size.width
+let SCREEN_HEIGHT : CGFloat = UIScreen.main.bounds.size.height
+let MARGIN_LEFT_DEFAULT : CGFloat = 20.0
+let CELL_HEIGHT_DEFAULT : CGFloat = 44.0
 let USERDEFAUTS : UserDefaults = UserDefaults.standard
 let USERDEFAUTS_KEY_USERMODEL :String = "UserModel"
 let VIEW_BGCOLOR :UIColor = UIColor.init(red: 246/255.0, green: 246/255.0, blue: 246/255.0, alpha: 1)

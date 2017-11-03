@@ -12,21 +12,22 @@ class AccountInfoTableViewCell: UITableViewCell {
     private var _dataDic : Dictionary<String,String>! = Dictionary.init()
     var dataDic : Dictionary<String,String>!{
         set{
-            _dataDic = dataDic
+            _dataDic = newValue
             self.settingData()
         }
         get{
             return _dataDic
         }
     }
-    private var _cellStyle : AccountInfoCellStyle = AccountInfoCellStyle.Nomal
-    var cellStyle : AccountInfoCellStyle!{
+    
+    private var _titleStyleInfo : (String,AccountInfoCellStyle) = ("标题",AccountInfoCellStyle.Nomal)
+    var titleStyleInfo : (String,AccountInfoCellStyle){
         set{
-            _cellStyle=cellStyle
+            _titleStyleInfo=newValue
             self.configShowStyle()
         }
         get{
-            return _cellStyle
+            return _titleStyleInfo
         }
     }
     
@@ -40,7 +41,7 @@ class AccountInfoTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.configView()
-        
+
     }
     
     ///设置视图样式
@@ -52,21 +53,21 @@ class AccountInfoTableViewCell: UITableViewCell {
         self.titleLab.font = UIFont.systemFont(ofSize: 15.0)
         self.addSubview(self.titleLab)
         
-        self.arrowsImg.frame = CGRect.init(x: SCREEN_WIDTH-MARGIN_LEFT_DEFAULT*2, y: CELL_HEIGHT_DEFAULT/2-10, width: MARGIN_LEFT_DEFAULT, height: MARGIN_LEFT_DEFAULT)
+        self.arrowsImg.frame = CGRect.init(x: SCREEN_WIDTH-MARGIN_LEFT_DEFAULT-10, y: CELL_HEIGHT_DEFAULT/2-5, width: MARGIN_LEFT_DEFAULT/2, height: MARGIN_LEFT_DEFAULT/2)
         self.arrowsImg.image = UIImage.init(named: "account_arrows_icon")
         self.addSubview(self.arrowsImg)
         
-        self.detailLab.frame = CGRect.init(x: SCREEN_WIDTH/2, y: 0, width: SCREEN_WIDTH/2-MARGIN_LEFT_DEFAULT*2, height: CELL_HEIGHT_DEFAULT)
+        self.detailLab.frame = CGRect.init(x: SCREEN_WIDTH/2, y: 0, width: SCREEN_WIDTH/2-MARGIN_LEFT_DEFAULT-14, height: CELL_HEIGHT_DEFAULT)
         self.detailLab.textColor = UIColor.darkGray
         self.detailLab.textAlignment = NSTextAlignment.right
-        self.detailLab.font = UIFont.systemFont(ofSize: 15.0)
+        self.detailLab.font = UIFont.systemFont(ofSize: 13.0)
         self.addSubview(self.detailLab)
         
         self.uSwitch.frame = CGRect.init(x: SCREEN_WIDTH-69, y: 7, width: 49, height: 31)
         self.uSwitch.addTarget(self, action: #selector(switchChange(_:)), for: UIControlEvents.valueChanged)
         self.addSubview(self.uSwitch)
         
-        self.detailImg.frame = CGRect.init(x: SCREEN_WIDTH-56, y: 4, width: 36, height: 36)
+        self.detailImg.frame = CGRect.init(x: SCREEN_WIDTH-70, y: 4, width: 36, height: 36)
         self.detailImg.layer.cornerRadius = 18
         self.detailImg.layer.masksToBounds = true
         self.addSubview(self.detailImg)
@@ -75,9 +76,9 @@ class AccountInfoTableViewCell: UITableViewCell {
     
     ///设置显示样式
     func configShowStyle(){
-        
+        self.titleLab.text = self.titleStyleInfo.0
         self.initializationShow()
-        switch self.cellStyle! {
+        switch self.titleStyleInfo.1 {
         case AccountInfoCellStyle.Switch:
             self.detailImg.isHidden = true
             self.detailLab.isHidden = true
@@ -103,21 +104,22 @@ class AccountInfoTableViewCell: UITableViewCell {
     ///设置数据
     func settingData(){
         
-        self.titleLab.text = (self.dataDic["title"] == nil ? "" : self.dataDic["title"])
         self.detailLab.text = (self.dataDic["detail"] == nil ? "" : self.dataDic["detail"])
         self.uSwitch.isOn =  (self.dataDic["switch"] == "1" ? true : false)
         if(self.dataDic["image"] != nil && self.dataDic["image"] != ""){
             self.detailImg.sd_setImage(with: URL.init(string: self.dataDic["image"]!))
+        }else{
+            self.detailImg.image = UIImage.init(named: "account_default_icon")
         }
         
     }
     
     ///初始化显示
     func initializationShow(){
-        self.detailLab.isHidden = true
-        self.detailImg.isHidden = true
-        self.uSwitch.isHidden = true
-        self.arrowsImg.isHidden = true
+        self.detailLab.isHidden = false
+        self.detailImg.isHidden = false
+        self.uSwitch.isHidden = false
+        self.arrowsImg.isHidden = false
     }
     
     ///切换改变

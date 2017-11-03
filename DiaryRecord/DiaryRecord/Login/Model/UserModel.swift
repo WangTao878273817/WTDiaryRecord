@@ -17,6 +17,8 @@ class UserModel: NSObject {
     public var email : String?
     ///用户创建账户日期
     public var createDate :String?
+    ///用户座右铭
+    public var motto : String?
     ///用户头像地址
     public var imageUrl : String?
     
@@ -33,6 +35,7 @@ class UserModel: NSObject {
         self.name=dic!["name"]
         self.email=dic!["email"]
         self.createDate=dic!["createDate"]
+        self.motto=dic!["motto"]
         self.imageUrl=dic!["imageUrl"]
     }
     
@@ -42,6 +45,7 @@ class UserModel: NSObject {
         self.name=bmobObject.object(forKey: "name") as? String
         self.email=bmobObject.object(forKey: "email") as? String
         self.createDate=bmobObject.object(forKey: "createdAt") as? String
+        self.motto=bmobObject.object(forKey: "motto") as? String
         self.imageUrl=bmobObject.object(forKey: "imageUrl") as? String
     }
     
@@ -52,6 +56,7 @@ class UserModel: NSObject {
         resultDic["name"]=self.name
         resultDic["email"]=self.email
         resultDic["createDate"]=self.createDate
+        resultDic["motto"]=self.motto
         resultDic["imageUrl"]=self.imageUrl
         
         return resultDic

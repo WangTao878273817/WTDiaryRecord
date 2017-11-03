@@ -4,4 +4,5 @@ use_frameworks!
 target 'DiaryRecord’ do
 pod 'BmobSDK'
 pod 'SVProgressHUD'
+pod 'SDWebImage'
 end

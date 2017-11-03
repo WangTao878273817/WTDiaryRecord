@@ -19,7 +19,7 @@ class Utils: NSObject {
     }
     
     ///获取保存的用户信息
-    static func getUserInfo() -> UserModel? {
+    static func getUserInfo() -> UserModel! {
         
         let resultDic : Dictionary<String,String>? = USERDEFAUTS.object(forKey: USERDEFAUTS_KEY_USERMODEL) as? Dictionary<String, String>
         return UserModel.init(dic: resultDic)

@@ -14,3 +14,4 @@
 
 #import "SVProgressHUD.h"
 #import "BmobSDK/Bmob.h"
+#import <SDWebImage/UIImageView+WebCache.h>

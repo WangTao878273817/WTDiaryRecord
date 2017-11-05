@@ -10,7 +10,7 @@ import UIKit
 
 class UserModel: NSObject {
     ///用户唯一ID
-    public var userId : String?
+    public var objectId : String?
     ///用户名（昵称）
     public var name : String?
     ///用户的邮箱
@@ -31,7 +31,7 @@ class UserModel: NSObject {
         if (dic == nil || dic!.count < 1 )  {
             return
         }
-        self.userId=dic!["userId"]
+        self.objectId=dic!["objectId"]
         self.name=dic!["name"]
         self.email=dic!["email"]
         self.createDate=dic!["createDate"]
@@ -41,7 +41,7 @@ class UserModel: NSObject {
     
     init(bmobObject : BmobObject) {
         super.init()
-        self.userId="\(bmobObject.object(forKey: "userId") as! Int)"
+        self.objectId=bmobObject.object(forKey: "objectId") as? String
         self.name=bmobObject.object(forKey: "name") as? String
         self.email=bmobObject.object(forKey: "email") as? String
         self.createDate=bmobObject.object(forKey: "createdAt") as? String
@@ -49,10 +49,10 @@ class UserModel: NSObject {
         self.imageUrl=bmobObject.object(forKey: "imageUrl") as? String
     }
     
-    func getModelDictionary() -> Dictionary<String,String>{
+    func getModelDictionary() -> Dictionary<String,String>!{
         var resultDic : Dictionary<String,String> = Dictionary.init()
         
-        resultDic["userId"]=self.userId
+        resultDic["objectId"]=self.objectId
         resultDic["name"]=self.name
         resultDic["email"]=self.email
         resultDic["createDate"]=self.createDate

@@ -10,11 +10,19 @@ import UIKit
 
 class Utils: NSObject {
 
-    ///保存用户信息
+    ///保存用户信息（字典）
     static func savaUserInfo(dic : Dictionary<String,String>){
         
         USERDEFAUTS.set(dic, forKey: USERDEFAUTS_KEY_USERMODEL)
         USERDEFAUTS.synchronize()
+        
+    }
+    
+    ///保存用户信息（模型）
+    static func savaUserInfo(userModel : UserModel){
+        
+        let dataDic : Dictionary<String,String>! = userModel.getModelDictionary()
+        self.savaUserInfo(dic: dataDic)
         
     }
     
@@ -25,6 +33,7 @@ class Utils: NSObject {
         return UserModel.init(dic: resultDic)
         
     }
+    
     
     
 }

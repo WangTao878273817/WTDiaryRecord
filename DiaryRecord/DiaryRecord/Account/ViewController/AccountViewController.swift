@@ -19,6 +19,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var notepadLab: UILabel!
     @IBOutlet weak var sunLab: UILabel!
     
+
     var bgShapeLayer : CAShapeLayer?
     let accManage = AccountDataManage.share
     

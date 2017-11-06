@@ -13,7 +13,9 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     private var titleStyleArray : Array<Any>  = Array.init()
     private var dataArray : Array<Any> = Array.init()
-
+    var editType : Int = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,7 +75,7 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let userModel : UserModel = Utils.getUserInfo()
         let session1 : Array<Any> = [["image":(userModel.imageUrl == nil ? "" : userModel.imageUrl)],
                                      ["detail":userModel.name],
-                                     ["detail":userModel.name],
+                                     ["detail":userModel.motto],
                                      ["":""]]
         
         
@@ -179,9 +181,9 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     ///点击Cell处理
     func disposeClickWithString(title : String)
     {
-        var editType : Int = 0
+        
         if(title == "头像"){
-            
+            self.createUpdateStyle()
             return
         }else if(title == "名字"){
             editType = 0
@@ -190,7 +192,38 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }else if(title == "修改密码"){
             editType = 2
         }
-        self.performSegue(withIdentifier: "EditInfoDetailIdentifler", sender: editType)
+        self.performSegue(withIdentifier: "EditInfoDetailIdentifler", sender: self)
+    }
+    
+    ///跳转页面传值
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if(segue.destination is EditInfoDetailViewController){
+            let tagVC = segue.destination as! EditInfoDetailViewController
+            tagVC.editType = editType
+            tagVC.savaComplentHandler = {
+                self.configVarData()
+                self.tableView .reloadData()
+            }
+        }
+    }
+
+    //MARK: -上传头像
+    func createUpdateStyle(){
+        
+        let alertController = UIAlertController.init(title: "请选择", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let action1 = UIAlertAction.init(title: "相机", style: UIAlertActionStyle.default) { (aa) in
+            
+        }
+        alertController.addAction(action1)
+        let action2 = UIAlertAction.init(title: "相册", style: UIAlertActionStyle.default) { (aa) in
+            
+        }
+        alertController.addAction(action2)
+        let action3 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.destructive, handler: nil)
+        alertController.addAction(action3)
+        self.present(alertController, animated: true, completion: nil)
+        
     }
     
     override func didReceiveMemoryWarning() {

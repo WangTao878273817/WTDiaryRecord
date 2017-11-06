@@ -26,11 +26,17 @@ class LoginViewController: UIViewController {
         self.configController()
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.isNavigationBarHidden = true
+        self.nameTxf.text = ""
+        self.pwdTxf.text = ""
+    }
     
     ///设置视图
     func configController(){
         
-        self.navigationController?.isNavigationBarHidden = true
         let userModel = Utils.getUserInfo()
         if(userModel!.email != nil && userModel!.email != ""){
             self.performSegue(withIdentifier: "loginToHome2", sender: "selfs")

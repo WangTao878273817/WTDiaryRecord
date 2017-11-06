@@ -23,6 +23,8 @@ class AccountDataManage: NSObject {
         }
     }
     
+    private override init(){}
+    
     //MARK: - AccountViewController
     ///获取用户数量信息
     func getAccountInfo(complent :((Dictionary<String,String>) -> Void)!){

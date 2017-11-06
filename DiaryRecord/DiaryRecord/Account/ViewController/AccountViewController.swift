@@ -22,6 +22,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
 
     var bgShapeLayer : CAShapeLayer?
     let accManage = AccountDataManage.share
+    let rnManage = NotificationManager.share
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,11 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         self.settingAccountInfo()
         self.requestAccountInfo()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.popRefresh()
     }
     
     ///初始化配置视图
@@ -87,6 +93,19 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         self.concernLab.text=dataDic["concernCount"]
         self.sunLab.text=(dataDic["sunCount"] == nil ? "0" : dataDic["sunCount"])
         
+    }
+    
+    ///返回判断刷新
+    func popRefresh(){
+        rnManage.addObservers(vcName: "AccountViewController") { (arr) in
+            for tag in arr {
+                if(tag == 1){  //刷新用户资料信息
+                    self.settingAccountInfo()
+                }else if (tag == 2){   // 刷新用户数据信息
+                    self.requestAccountInfo()
+                }
+            }
+        }
     }
     
     ///点击设置按钮

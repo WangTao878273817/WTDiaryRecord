@@ -8,13 +8,13 @@
 
 import UIKit
 
-class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     private var titleStyleArray : Array<Any>  = Array.init()
     private var dataArray : Array<Any> = Array.init()
     var editType : Int = 0
-    
+    let refreshNotification : NotificationManager = NotificationManager.share
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -202,6 +202,7 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let tagVC = segue.destination as! EditInfoDetailViewController
             tagVC.editType = editType
             tagVC.savaComplentHandler = {
+                self.refreshNotification.postNotification(name: "AccountViewController", array: [1])
                 self.configVarData()
                 self.tableView .reloadData()
             }
@@ -213,17 +214,39 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let alertController = UIAlertController.init(title: "请选择", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         let action1 = UIAlertAction.init(title: "相机", style: UIAlertActionStyle.default) { (aa) in
-            
+            self.openCamera(type: UIImagePickerControllerSourceType.camera)
         }
         alertController.addAction(action1)
         let action2 = UIAlertAction.init(title: "相册", style: UIAlertActionStyle.default) { (aa) in
-            
+            self.openCamera(type: UIImagePickerControllerSourceType.photoLibrary)
         }
         alertController.addAction(action2)
         let action3 = UIAlertAction.init(title: "取消", style: UIAlertActionStyle.destructive, handler: nil)
         alertController.addAction(action3)
         self.present(alertController, animated: true, completion: nil)
         
+    }
+    
+    //MARK: -调出相机获取相册
+    func openCamera(type : UIImagePickerControllerSourceType){
+        let imagePickerVC : UIImagePickerController = UIImagePickerController.init()
+        imagePickerVC.sourceType = type
+        imagePickerVC.delegate=self
+        imagePickerVC.allowsEditing = true
+        self.present(imagePickerVC, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        self.dismiss(animated: true, completion: nil)
+//        let images : UIImage = (info[UIImagePickerControllerOriginalImage] as? UIImage)!
+        let images : UIImage = (info[UIImagePickerControllerEditedImage] as? UIImage)!
+        print("")
+    }
+    
+    ///是否允许访问相机
+    func isAllowVistCamera() -> Bool{
+        
+        return true
     }
     
     override func didReceiveMemoryWarning() {

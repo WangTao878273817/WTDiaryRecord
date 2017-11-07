@@ -84,8 +84,7 @@ class AccountDataManage: NSObject {
         
     }
     
-    
-    //MARK: - EditInfoDetailViewController
+    //MARK: - EditInfoViewController
     
     ///上传头像
     func updateUserIcon(image : UIImage , complent : ((Bool,String) -> Void)!){
@@ -98,7 +97,7 @@ class AccountDataManage: NSObject {
         let group : DispatchGroup = DispatchGroup.init()
         let queue = DispatchQueue.global()
         var result : Bool = false
-    
+        
         let updateData : Data = UIImagePNGRepresentation(image)!
         let nUserIcon : String = "\(arc4random()%9999)_\(self.userModel.email!)_userIcon.png"
         let bmobFile : BmobFile = BmobFile.init(fileName: nUserIcon, withFileData: updateData)
@@ -132,7 +131,7 @@ class AccountDataManage: NSObject {
                     self.deleteOldUserIcon(iconUrl: bmobFile.url)
                     complent(false,"更新头像失败！")
                 }
-
+                
             }
             
         }
@@ -149,6 +148,8 @@ class AccountDataManage: NSObject {
     }
     
     
+    //MARK: - EditInfoDetailViewController
+
     ///修改名字
     func modifyUserName(newName : String , complent : ((Bool,String) -> Void)!){
         

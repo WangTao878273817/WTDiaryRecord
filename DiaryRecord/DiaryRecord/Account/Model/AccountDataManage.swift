@@ -159,9 +159,9 @@ class AccountDataManage: NSObject {
             if(isSuccess == true && error == nil){
                 self.userModel.name=newName
                 Utils.savaUserInfo(userModel: self.userModel)
-                complent (true,"修改成功")
+                complent (true,"修改成功！")
             }else{
-                complent (false,"修改姓名失败")
+                complent (false,"修改姓名失败！")
             }
         }
         
@@ -176,9 +176,9 @@ class AccountDataManage: NSObject {
             if(isSuccess == true && error == nil){
                 self.userModel.motto=newMotto
                 Utils.savaUserInfo(userModel: self.userModel)
-                complent (true,"修改成功")
+                complent (true,"修改成功！")
             }else{
-                complent (false,"修改座右铭失败")
+                complent (false,"修改座右铭失败！")
             }
         }
         
@@ -200,7 +200,7 @@ class AccountDataManage: NSObject {
                 if(array != nil && array!.count > 0 && error == nil){
                     group.leave()
                 }else{
-                    complent(false,"原密码不正确")
+                    complent(false,"原密码不正确！")
                 }
             })
         }
@@ -210,12 +210,37 @@ class AccountDataManage: NSObject {
             change.setObject(newPwd, forKey: "password")
             change.updateInBackground { (isSuccess, error) in
                 if(isSuccess == true && error == nil){
-                    complent (true,"修改密码成功,请重新登录")
+                    complent (true,"修改密码成功,请重新登录！")
                 }else{
-                    complent (false,"修改密码失败")
+                    complent (false,"修改密码失败！")
                 }
             }
         }
         
     }
+    
+    //MARK: - NotepadViewController
+    
+    ///获取日记本
+    func getNotepad(complent : ((Bool,String,Array<NotepadModel>) -> Void)!){
+        
+        let query : BmobQuery = BmobQuery.init(className: LIST_NOTEPADLIST)
+        query.whereKey("userObjectId", equalTo: self.userModel.objectId)
+        query.findObjectsInBackground({ (array, error) in
+            if(array != nil && array!.count > 0 && error == nil){
+                var resultArray : Array<NotepadModel> = Array.init()
+                for item in array!{
+                    let newItem : BmobObject = item as! BmobObject
+                    let model : NotepadModel = NotepadModel.init(bmobObject: newItem)
+                    resultArray.append(model)
+                }
+                complent(true,"",resultArray)
+            }else{
+                complent(false,"您还没有创建过日记本！",Array.init())
+            }
+        })
+        
+    }
+    
+    
 }

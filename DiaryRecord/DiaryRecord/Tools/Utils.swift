@@ -34,6 +34,52 @@ class Utils: NSObject {
         
     }
     
+    ///String 转 Date
+    static func stringToDate(dateStr : String) -> Date{
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = dateFormatter.date(from: dateStr)
+        return date!
+        
+    }
+    
+    ///Date 转 String
+    static func dateToString(date : Date) -> String{
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let str = dateFormatter.string(from: date)
+        return str
+        
+    }
+
+    
+    ///判断当前时间是否在两个时间中间
+    static func judgeCurrutDateInTwoDate(startDateStr : String , endDateStr : String) -> Bool{
+        
+        let startDate = Utils.stringToDate(dateStr: startDateStr)
+        let endDate = Utils.stringToDate(dateStr: endDateStr)
+        let currutDate = Date.init()
+        
+        if(currutDate.compare(startDate) == ComparisonResult.orderedDescending && currutDate.compare(endDate) == ComparisonResult.orderedAscending){
+            return true
+        }
+        return false
+        
+    }
+    
+    ///String类型时间取 年月日(yyyy-MM-dd)
+    static func newStringDate(dateStr : String) -> String{
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = dateFormatter.date(from: dateStr)
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let resultStr = dateFormatter.string(from: date!)
+        return resultStr
+    }
+    
 
     
     

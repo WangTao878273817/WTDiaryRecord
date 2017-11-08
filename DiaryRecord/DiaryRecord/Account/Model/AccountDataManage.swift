@@ -84,20 +84,72 @@ class AccountDataManage: NSObject {
         
     }
     
-    ///上传文件（测试头像上传）
-    func updateUserIcon(){
+    //MARK: - EditInfoViewController
+    
+    ///上传头像
+    func updateUserIcon(image : UIImage , complent : ((Bool,String) -> Void)!){
         
-        let updateData : Data = UIImagePNGRepresentation(UIImage.init(named: "account_default_icon")!)!
-        let bmobFile : BmobFile = BmobFile.init(fileName: "user.png", withFileData: updateData)
-        bmobFile.saveInBackground { (isSuccess, errer) in
-            
-            print("staut-\(isSuccess)---url-\(bmobFile.url)")
-            
+        if(image.size.width <= 0 || image.size.height<=0 ){
+            complent(false,"上传失败！")
+            return
         }
         
+        let group : DispatchGroup = DispatchGroup.init()
+        let queue = DispatchQueue.global()
+        var result : Bool = false
+        
+        let updateData : Data = UIImagePNGRepresentation(image)!
+        let nUserIcon : String = "\(arc4random()%9999)_\(self.userModel.email!)_userIcon.png"
+        let bmobFile : BmobFile = BmobFile.init(fileName: nUserIcon, withFileData: updateData)
+        group.enter()
+        queue.async {
+            bmobFile.saveInBackground { (isSuccess, errer) in
+                if(isSuccess == true && errer == nil){
+                    result = true
+                }else{
+                    result = false
+                }
+                group.leave()
+            }
+        }
+        
+        let change : BmobObject = BmobObject.init(outDataWithClassName: LIST_USERLIST, objectId: self.userModel.objectId)
+        
+        group.notify(queue: queue) {
+            if(result == false) {
+                complent(false,"上传失败！")
+                return
+            }
+            change.setObject(bmobFile.url, forKey: "imageUrl")
+            change.updateInBackground { (isSuccess, error) in
+                if(isSuccess == true && error == nil){
+                    self.deleteOldUserIcon(iconUrl: self.userModel.imageUrl)
+                    self.userModel.imageUrl = bmobFile.url
+                    Utils.savaUserInfo(userModel: self.userModel)
+                    complent(true,"更新头像成功！")
+                }else{
+                    self.deleteOldUserIcon(iconUrl: bmobFile.url)
+                    complent(false,"更新头像失败！")
+                }
+                
+            }
+            
+        }
     }
     
+    ///删除旧头像
+    func deleteOldUserIcon(iconUrl : String?){
+        if(iconUrl == nil || iconUrl == ""){ return }
+        BmobFile.filesDeleteBatch(with: [iconUrl!]) { (fileArray, isSuccess, error) in
+            if(isSuccess == true &&  error == nil ){
+                print("删除头像成功！")
+            }
+        }
+    }
+    
+    
     //MARK: - EditInfoDetailViewController
+
     ///修改名字
     func modifyUserName(newName : String , complent : ((Bool,String) -> Void)!){
         

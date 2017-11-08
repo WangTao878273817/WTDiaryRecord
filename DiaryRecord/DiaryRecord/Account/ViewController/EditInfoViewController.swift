@@ -14,6 +14,7 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     private var titleStyleArray : Array<Any>  = Array.init()
     private var dataArray : Array<Any> = Array.init()
     var editType : Int = 0
+    let accManage : AccountDataManage = AccountDataManage.share
     let refreshNotification : NotificationManager = NotificationManager.share
     
     override func viewDidLoad() {
@@ -238,9 +239,17 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         self.dismiss(animated: true, completion: nil)
-//        let images : UIImage = (info[UIImagePickerControllerOriginalImage] as? UIImage)!
         let images : UIImage = (info[UIImagePickerControllerEditedImage] as? UIImage)!
-        print("")
+        SVProgressHUD.show(withStatus: "上传中...")
+        accManage.updateUserIcon(image: images) { (isSuccess, reason) in
+            if(isSuccess == true){
+                self.configVarData()
+                self.refreshNotification.postNotification(name: "AccountViewController", array: [1])
+                SVProgressHUD.showSuccess(withStatus: reason)
+            }else{
+                SVProgressHUD.showError(withStatus: reason)
+            }
+        }
     }
     
     ///是否允许访问相机

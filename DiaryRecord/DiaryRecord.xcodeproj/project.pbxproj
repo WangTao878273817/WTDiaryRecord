@@ -16,6 +16,7 @@
 		7857919F1FA7221300A60D14 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7857919E1FA7221200A60D14 /* Home.storyboard */; };
 		787383FF1FAAEC640050098A /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787383FE1FAAEC640050098A /* EditInfoViewController.swift */; };
 		787384021FAB03EF0050098A /* AccountInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787384011FAB03EF0050098A /* AccountInfoTableViewCell.swift */; };
+		78777D6B1FB2E1BE00FE278E /* NotepadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78777D6A1FB2E1BE00FE278E /* NotepadModel.swift */; };
 		78863CEB1FA1CED90040B1B8 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78863CEA1FA1CED90040B1B8 /* UserModel.swift */; };
 		78863CED1FA1E0250040B1B8 /* LoginDataManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78863CEC1FA1E0250040B1B8 /* LoginDataManage.swift */; };
 		78863CEF1FA2FEB30040B1B8 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78863CEE1FA2FEB30040B1B8 /* Utils.swift */; };
@@ -42,6 +43,7 @@
 		7857919E1FA7221200A60D14 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		787383FE1FAAEC640050098A /* EditInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoViewController.swift; sourceTree = "<group>"; };
 		787384011FAB03EF0050098A /* AccountInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoTableViewCell.swift; sourceTree = "<group>"; };
+		78777D6A1FB2E1BE00FE278E /* NotepadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadModel.swift; sourceTree = "<group>"; };
 		78863CE81FA1BB090040B1B8 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		78863CEA1FA1CED90040B1B8 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		78863CEC1FA1E0250040B1B8 /* LoginDataManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataManage.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				788690AA1FA9C03200BBCB82 /* AccountDataManage.swift */,
+				78777D6A1FB2E1BE00FE278E /* NotepadModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 				7888CF831F9F21D6006C5CB1 /* DefineHeader.swift in Sources */,
 				043BBD541FB1E4E100D9949C /* NotepadCollectionViewCell.swift in Sources */,
 				787384021FAB03EF0050098A /* AccountInfoTableViewCell.swift in Sources */,
+				78777D6B1FB2E1BE00FE278E /* NotepadModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

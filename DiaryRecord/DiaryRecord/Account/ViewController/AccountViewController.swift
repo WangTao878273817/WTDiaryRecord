@@ -80,7 +80,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         let userModel : UserModel = Utils.getUserInfo()!
         self.nameLab.text = userModel.name
         if(userModel.imageUrl != nil && userModel.imageUrl != ""){
-            self.userIcon.sd_setImage(with: URL.init(string: userModel.imageUrl!))
+            self.userIcon.sd_setImage(with: URL.init(string: userModel.imageUrl!), placeholderImage: UIImage.init(named: "account_default_icon"),  completed: nil);
         }
     }
     

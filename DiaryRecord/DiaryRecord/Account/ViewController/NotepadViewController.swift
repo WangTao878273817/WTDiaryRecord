@@ -11,9 +11,14 @@ import UIKit
 class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var notepadModelArray : Array<NotepadModel> = Array.init()
+    
+    let accManage : AccountDataManage = AccountDataManage.share
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configViewCotroller()
+        self.getNotepadRequest()
     }
     
     ///设置页面
@@ -28,23 +33,51 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
         self.navigationController?.popViewController(animated: true)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: -UICollectionView Delegate And DataSource
+    //MARK: - UICollectionView Delegate And DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.notepadModelArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let identifyStr : String = "NotepadCell"
         let cell : NotepadCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: identifyStr, for: indexPath) as! NotepadCollectionViewCell
+        let notepadModel : NotepadModel = self.notepadModelArray[indexPath.item]
         cell.layer.borderColor = UIColor.init(red: 216/255.0, green: 216/255.0, blue: 216/255.0, alpha: 1).cgColor
-        cell.pageNameLab.text = "小计本书"
+        cell.pageNameLab.text = notepadModel.notepadName
+        if(notepadModel.imageUrl == nil || notepadModel.imageUrl == ""){
+            cell.pageImage.image = UIImage.init(named: "account_notepad")
+        }else{
+            cell.pageImage.sd_setImage(with: URL.init(string: notepadModel.imageUrl!), placeholderImage: UIImage.init(named: "account_notepad"), completed: nil)
+        }
+        let dateStr : String = (Utils.judgeCurrutDateInTwoDate(startDateStr: notepadModel.createdDate!, endDateStr: notepadModel.endDate!) == true ? "未过期" : "已过期")
+        let startStr : String = Utils.newStringDate(dateStr: notepadModel.createdDate!)
+        let endStr : String = Utils.newStringDate(dateStr: notepadModel.endDate!)
+        cell.describeLab.text="\(dateStr)\n\(startStr)至\(endStr)"
         
         return cell
+    }
+    
+    
+    //MARK: - Request
+    ///请求日记本
+    func getNotepadRequest(){
+        
+        SVProgressHUD.show(withStatus: "加载中...")
+        accManage.getNotepad { (isSuccess, reason, dataArray) in
+            if(isSuccess == true){
+                self.notepadModelArray = dataArray
+                self.collectionView.reloadData()
+                SVProgressHUD.dismiss()
+            }else{
+                SVProgressHUD.showError(withStatus: reason)
+            }
+        }
+        
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     /*

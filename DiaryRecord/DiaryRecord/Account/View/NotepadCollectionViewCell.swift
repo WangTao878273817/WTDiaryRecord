@@ -13,4 +13,6 @@ class NotepadCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var pageImage: UIImageView!
     @IBOutlet weak var pageNameLab: UILabel!
     @IBOutlet weak var describeLab: UILabel!
+    @IBOutlet weak var privateLab: UILabel!
+    
 }

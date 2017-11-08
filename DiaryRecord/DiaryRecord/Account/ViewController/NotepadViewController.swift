@@ -52,10 +52,12 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
         let dateStr : String = (Utils.judgeCurrutDateInTwoDate(startDateStr: notepadModel.createdDate!, endDateStr: notepadModel.endDate!) == true ? "未过期" : "已过期")
         let startStr : String = Utils.newStringDate(dateStr: notepadModel.createdDate!)
         let endStr : String = Utils.newStringDate(dateStr: notepadModel.endDate!)
-        cell.describeLab.text="\(dateStr)\n\(startStr)至\(endStr)"
+        cell.describeLab.text = "\(dateStr)\n\(startStr)至\(endStr)"
+        cell.privateLab.isHidden = (notepadModel.isPrivate == "0")
         
         return cell
     }
+    
     
     
     //MARK: - Request

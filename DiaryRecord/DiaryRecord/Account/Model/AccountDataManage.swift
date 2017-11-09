@@ -242,5 +242,26 @@ class AccountDataManage: NSObject {
         
     }
     
+    //MARK: - NotepadAddViewController
+    
+    ///添加日记本
+    func addNotepad(notepadModel : NotepadModel , complent : ((Bool,String) -> Void)!){
+        
+        let object : BmobObject = BmobObject.init(className: LIST_NOTEPADLIST)
+        object.setObject(self.userModel.objectId, forKey: "userObjectId")
+        object.setObject(notepadModel.notepadName, forKey: "notepadName")
+        object.setObject(notepadModel.isPrivate, forKey: "isPrivate")
+        object.setObject(Utils.stringToDate(dateStr: notepadModel.endDate!), forKey: "endDate")
+        object.setObject(notepadModel.imageUrl, forKey: "imageUrl")
+        object.saveInBackground { (isSuccess, error) in
+            if(isSuccess && error == nil){
+                complent(true,"添加成功")
+            }else{
+                complent(false,"添加失败")
+            }
+        }
+        
+    }
+    
     
 }

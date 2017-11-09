@@ -255,6 +255,7 @@ class AccountDataManage: NSObject {
         object.setObject(notepadModel.imageUrl, forKey: "imageUrl")
         object.saveInBackground { (isSuccess, error) in
             if(isSuccess && error == nil){
+                
                 complent(true,"添加成功")
             }else{
                 complent(false,"添加失败")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AdSupport
 
 class NotepadAddViewController: UIViewController {
 
@@ -16,6 +17,7 @@ class NotepadAddViewController: UIViewController {
     @IBOutlet weak var selectDatePicker: UIDatePicker!
     @IBOutlet weak var datePickerView: UIView!
     
+    let notManage : NotificationManager = NotificationManager.share
     let accManage : AccountDataManage = AccountDataManage.share
     
     override func viewDidLoad() {
@@ -50,6 +52,7 @@ class NotepadAddViewController: UIViewController {
             accManage.addNotepad(notepadModel: self.getNotepadModel(), complent: { (isSuccess, reason) in
                 if(isSuccess){
                     SVProgressHUD.dismiss()
+                    self.postReloadViewController()
                     Utils.showAlertView(str: reason, vc: self, clickHandler: { (aa) in
                         self.navigationController?.popViewController(animated: true)
                     })
@@ -85,10 +88,18 @@ class NotepadAddViewController: UIViewController {
         
     }
     
+    //发送要刷新页面
+    func postReloadViewController(){
+        let reload1 : (String,Array<Int>) = ("NotepadViewController",[1])
+        let reload2 : (String,Array<Int>) = ("AccountViewController",[2])
+        self.notManage.postNotification(array: [reload1,reload2])
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        //        let uuid = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        //        print("uuid-\(uuid)")         获取设备的idfa uuid
     }
     
 

@@ -53,6 +53,16 @@ class Utils: NSObject {
         return str
         
     }
+    
+    ///Date 转 String(yyyy年MM月dd日)
+    static func dateToString2(date : Date) -> String{
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy年MM月dd"
+        let str = dateFormatter.string(from: date)
+        return str
+        
+    }
 
     
     ///判断当前时间是否在两个时间中间
@@ -80,6 +90,27 @@ class Utils: NSObject {
         return resultStr
     }
     
+    //获取当前时间加 x年x月x日 后的时间
+    static func getPlusDate(year : Int , month : Int , day : Int) -> Date{
+        
+        let calendar : Calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
+        var com = DateComponents.init()
+        com.year = year
+        com.month = month
+        com.day = day
+        let resultDate = calendar.date(byAdding: com, to: Date.init())
+        return resultDate!
+        
+    }
+    
+    ///无条件弹窗
+    static func showAlertView(str : String , vc : UIViewController , clickHandler : @escaping (UIAlertAction) -> Void){
+        
+        let alertController : UIAlertController = UIAlertController.init(title: "提示", message: str, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction.init(title: "确定", style: UIAlertActionStyle.default, handler: clickHandler))
+        vc.present(alertController, animated: true, completion: nil)
+        
+    }
 
     
     

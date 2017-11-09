@@ -15,6 +15,7 @@ class NotificationManager: NSObject {
     
     private override init(){}
     
+    ///发送一条刷新通知
     func postNotification(name : String ,  array : Array<Int>){
         
         var isExist = false
@@ -35,6 +36,16 @@ class NotificationManager: NSObject {
         }
     }
     
+    ///发送多条刷新通知
+    func postNotification(array : Array<(name : String ,  array : Array<Int>)>) {
+        if(array.isEmpty || array.count <= 0 ){ return}
+        for item in array{
+            self.postNotification(name: item.name, array: item.array)
+        }
+        
+    }
+    
+    ///接收通知
     func addObservers(vcName : String , complent : (Array<Int>)->Void){
         var index : (Bool,Int) = (false,0)
         for mo in self.modelArray {

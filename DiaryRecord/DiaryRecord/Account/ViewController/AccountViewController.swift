@@ -68,7 +68,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
         beizerPath.addLine(to: CGPoint.init(x: 0, y: 450))
         beizerPath.addLine(to: CGPoint.init(x: Int(SCREEN_WIDTH), y: 450))
         beizerPath.addLine(to: CGPoint.init(x: Int(SCREEN_WIDTH), y: 320))
-        beizerPath.addQuadCurve(to: CGPoint.init(x: 0, y: 320), controlPoint: CGPoint.init(x: Int(SCREEN_WIDTH/2), y: Int(360-moveSize)))
+        beizerPath.addQuadCurve(to: CGPoint.init(x: 0, y: 320), controlPoint: CGPoint.init(x: Int(SCREEN_WIDTH/2), y: Int(370-moveSize)))
         beizerPath.lineCapStyle=CGLineCap.round
         beizerPath.lineJoinStyle=CGLineJoin.round
         return beizerPath.cgPath

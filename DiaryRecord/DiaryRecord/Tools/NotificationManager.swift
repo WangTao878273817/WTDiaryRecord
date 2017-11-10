@@ -16,12 +16,12 @@ class NotificationManager: NSObject {
     private override init(){}
     
     ///发送一条刷新通知
-    func postNotification(name : String ,  array : Array<Int>){
+    func postNotification(notModel : NotificationManagerModel){
         
         var isExist = false
         for model in self.modelArray {
-            if(model.name == name){
-                model.tagArray += array
+            if(model.name == notModel.name){
+                model.tagArray += notModel.tagArray
                 model.tagArray = self.deleteRepeat(array: model.tagArray)
                 isExist = true
                 break
@@ -29,32 +29,30 @@ class NotificationManager: NSObject {
         }
         
         if(isExist == false){
-            let model : NotificationManagerModel = NotificationManagerModel.init()
-            model.name = name
-            model.tagArray = array
-            self.modelArray.append(model)
+            self.modelArray.append(notModel)
         }
     }
     
     ///发送多条刷新通知
-    func postNotification(array : Array<(name : String ,  array : Array<Int>)>) {
+    func postNotification(array : Array<NotificationManagerModel>) {
         if(array.isEmpty || array.count <= 0 ){ return}
         for item in array{
-            self.postNotification(name: item.name, array: item.array)
+            self.postNotification(notModel: item)
         }
         
     }
     
     ///接收通知
-    func addObservers(vcName : String , complent : (Array<Int>)->Void){
+    func addObservers(vc : UIViewController , complent : (Array<Int>)->Void){
         var index : (Bool,Int) = (false,0)
+        let cName = (NSStringFromClass(vc.classForCoder).components(separatedBy: ".")).last
         for mo in self.modelArray {
-            if(vcName == mo.name){
+            if(mo.name == cName){
                 index.0=true
                 if(mo.tagArray.count>0){
                     complent(mo.tagArray)
                 }
-                continue
+                break
             }
             index.1 = index.1 + 1
         }
@@ -76,4 +74,10 @@ class NotificationManager: NSObject {
 class NotificationManagerModel: NSObject {
     var name : String = ""
     var tagArray = Array<Int>.init()
+    private override init() {}
+    init(name : String , tagArray : Array<Int>){
+        super.init()
+        self.name = name
+        self.tagArray = tagArray
+    }
 }

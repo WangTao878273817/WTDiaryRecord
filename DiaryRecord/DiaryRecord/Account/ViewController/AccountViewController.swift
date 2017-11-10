@@ -97,7 +97,7 @@ class AccountViewController: UIViewController,UIScrollViewDelegate {
     
     ///返回判断刷新
     func popRefresh(){
-        rnManage.addObservers(vcName: "AccountViewController") { (arr) in
+        rnManage.addObservers(vc: self) { (arr) in
             for tag in arr {
                 if(tag == 1){  //刷新用户资料信息
                     self.settingAccountInfo()

@@ -34,6 +34,7 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
         
     }
     
+    ///返回按钮
     @IBAction func backBtnClick(_ sender: Any) {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.popViewController(animated: true)
@@ -45,6 +46,7 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let identifyStr : String = "NotepadCell"
         let cell : NotepadCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: identifyStr, for: indexPath) as! NotepadCollectionViewCell
         let notepadModel : NotepadModel = self.notepadModelArray[indexPath.item]
@@ -63,7 +65,7 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
         
         return cell
     }
-    
+
     
     
     //MARK: - Request
@@ -85,7 +87,7 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
     
     ///返回刷新
     func popRefresh(){
-        self.notManage.addObservers(vcName: "NotepadViewController") { (array) in
+        self.notManage.addObservers(vc: self) { (array) in
             for item in array {
                 if(item == 1){
                     self.getNotepadRequest()
@@ -93,6 +95,19 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
             }
         }
     }
+    
+    ///跳转页面传值
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if(segue.destination is NotepadDetailViewController){
+            let indexPaths =  self.collectionView.indexPathsForSelectedItems
+            let indexPath : IndexPath = indexPaths![0]
+            let tagVC = segue.destination as! NotepadDetailViewController
+            tagVC.notepadModel = self.notepadModelArray[indexPath.item]
+            
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

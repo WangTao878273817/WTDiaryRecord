@@ -111,7 +111,16 @@ class Utils: NSObject {
         vc.present(alertController, animated: true, completion: nil)
         
     }
-
+    
+    ///弹窗 (红色确定，执行操作)
+    static func showAlertView2(str : String , vc : UIViewController , redClickHandler : @escaping (UIAlertAction) -> Void){
+        
+        let alertController : UIAlertController = UIAlertController.init(title: "提示", message: str, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction.init(title: "取消", style: UIAlertActionStyle.default, handler: nil))
+        alertController.addAction(UIAlertAction.init(title: "确定", style: UIAlertActionStyle.destructive, handler: redClickHandler))
+        vc.present(alertController, animated: true, completion: nil)
+        
+    }
     
     
 }

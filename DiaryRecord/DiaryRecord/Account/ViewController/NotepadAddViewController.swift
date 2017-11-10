@@ -90,9 +90,10 @@ class NotepadAddViewController: UIViewController {
     
     //发送要刷新页面
     func postReloadViewController(){
-        let reload1 : (String,Array<Int>) = ("NotepadViewController",[1])
-        let reload2 : (String,Array<Int>) = ("AccountViewController",[2])
-        self.notManage.postNotification(array: [reload1,reload2])
+        let notModel1 = NotificationManagerModel.init(name: "NotepadViewController", tagArray: [1])
+        let notModel2 = NotificationManagerModel.init(name: "AccountViewController", tagArray: [2])
+
+        self.notManage.postNotification(array: [notModel1,notModel2])
     }
     
     override func didReceiveMemoryWarning() {

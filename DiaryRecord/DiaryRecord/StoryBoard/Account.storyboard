@@ -420,6 +420,7 @@
                                             <outlet property="pageImage" destination="kof-uR-eCs" id="chO-VO-Gts"/>
                                             <outlet property="pageNameLab" destination="ck4-Ra-onz" id="nTz-WG-CbJ"/>
                                             <outlet property="privateLab" destination="nWv-Xs-nFB" id="IDX-5c-fjm"/>
+                                            <segue destination="O88-l5-D5d" kind="push" id="3ta-aa-2uA"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -572,7 +573,158 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5pt-Mh-wk0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="314" y="-748"/>
+            <point key="canvasLocation" x="313" y="-748"/>
+        </scene>
+        <!--日记本详情-->
+        <scene sceneID="IpD-SX-cJu">
+            <objects>
+                <viewController title="日记本详情" id="O88-l5-D5d" customClass="NotepadDetailViewController" customModule="DiaryRecord" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ztt-ej-jEm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="6b8-xU-2R8">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="日记本详情" id="Drf-dO-zli">
+                        <barButtonItem key="leftBarButtonItem" image="account_back_icon" id="IFS-bJ-J58">
+                            <connections>
+                                <action selector="backBtnClick:" destination="O88-l5-D5d" id="8hy-5P-7Nq"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="account_notepad_setting_icon" id="FIp-3s-Cb0">
+                            <connections>
+                                <action selector="settingBtnClick:" destination="O88-l5-D5d" id="Woq-0A-RA2"/>
+                                <segue destination="yRz-75-Pgk" kind="push" identifier="notepadEditSegue" id="vvV-1I-ZJG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V9g-MA-op0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="724" y="-748"/>
+        </scene>
+        <!--编辑日记本-->
+        <scene sceneID="egQ-3d-gP0">
+            <objects>
+                <viewController id="yRz-75-Pgk" customClass="NotepadEditViewController" customModule="DiaryRecord" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="N6M-KB-aW9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" id="bsZ-3A-19u">
+                                <rect key="frame" x="0.0" y="30" width="320" height="88"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="pKf-NQ-FA4">
+                                        <rect key="frame" x="10" y="44" width="300" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="私密日记本" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8g7-Ze-Pkm">
+                                        <rect key="frame" x="20" y="51" width="100" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="z1b-UX-FFr">
+                                        <rect key="frame" x="252" y="50" width="49" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y2m-v9-pbM">
+                                        <rect key="frame" x="20" y="7" width="58" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="主题（名称）" textAlignment="right" minimumFontSize="17" id="tET-Y7-Hey">
+                                        <rect key="frame" x="179" y="8" width="120" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="yRz-75-Pgk" id="3aG-2a-1yQ"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" id="1jQ-Fi-LEY">
+                                <rect key="frame" x="0.0" y="148" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jQC-kg-A7P">
+                                        <rect key="frame" x="20" y="0.0" width="281" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <state key="normal" title="设置封面"/>
+                                        <connections>
+                                            <action selector="settingImageBtnClick:" destination="yRz-75-Pgk" eventType="touchUpInside" id="7On-ja-q6Z"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" id="YFN-ey-WRB">
+                                <rect key="frame" x="0.0" y="222" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wir-DK-shw">
+                                        <rect key="frame" x="20" y="0.0" width="281" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <state key="normal" title="删除日记本">
+                                            <color key="titleColor" red="0.97897727270000001" green="0.19604640149999999" blue="0.39390388259999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="delegateBtnClick:" destination="yRz-75-Pgk" eventType="touchUpInside" id="rc5-MR-AAj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="●日记本没有日记才能删除日记本" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5iq-6K-BMD">
+                                <rect key="frame" x="20" y="274" width="284" height="26"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="编辑日记本" id="lSb-EY-xuJ">
+                        <barButtonItem key="leftBarButtonItem" image="account_back_icon" id="kXD-XN-tkj">
+                            <connections>
+                                <action selector="backBtnClick:" destination="yRz-75-Pgk" id="GzY-dr-brG"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="w5y-uH-Gsi">
+                            <connections>
+                                <action selector="savaBtnClick:" destination="yRz-75-Pgk" id="Zyj-r1-F7X"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="nameTxf" destination="tET-Y7-Hey" id="Oei-75-vD7"/>
+                        <outlet property="priSwitch" destination="z1b-UX-FFr" id="Ivi-n3-0NG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gFt-br-pnx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1122" y="-748"/>
         </scene>
         <!--编辑个人信息-->
         <scene sceneID="pdI-e1-bmd">
@@ -739,6 +891,7 @@
         <image name="account_meseger_icon" width="40" height="40"/>
         <image name="account_notepad" width="100" height="100"/>
         <image name="account_notepad_add_icon" width="20" height="20"/>
+        <image name="account_notepad_setting_icon" width="20" height="20"/>
         <image name="account_setting_icon" width="30" height="30"/>
         <image name="account_sun_icon" width="40" height="40"/>
         <image name="tabbar_account_nomal" width="30" height="30"/>

@@ -25,7 +25,7 @@ class AccountDataManage: NSObject {
     
     private override init(){}
     
-    //MARK: - AccountViewController
+    //MARK: - AccountViewController (用户中心)
     ///获取用户数量信息
     func getAccountInfo(complent :((Dictionary<String,String>) -> Void)!){
         
@@ -84,7 +84,7 @@ class AccountDataManage: NSObject {
         
     }
     
-    //MARK: - EditInfoViewController
+    //MARK: - EditInfoViewController (编辑用户信息)
     
     ///上传头像
     func updateUserIcon(image : UIImage , complent : ((Bool,String) -> Void)!){
@@ -123,13 +123,13 @@ class AccountDataManage: NSObject {
             change.setObject(bmobFile.url, forKey: "imageUrl")
             change.updateInBackground { (isSuccess, error) in
                 if(isSuccess == true && error == nil){
-                    self.deleteOldUserIcon(iconUrl: self.userModel.imageUrl)
+                    self.deleteOldFile(fileUrl: self.userModel.imageUrl)
                     self.userModel.imageUrl = bmobFile.url
                     Utils.savaUserInfo(userModel: self.userModel)
-                    complent(true,"更新头像成功！")
+                    complent(true,"修改头像成功！")
                 }else{
-                    self.deleteOldUserIcon(iconUrl: bmobFile.url)
-                    complent(false,"更新头像失败！")
+                    self.deleteOldFile(fileUrl: bmobFile.url)
+                    complent(false,"修改头像失败！")
                 }
                 
             }
@@ -137,18 +137,18 @@ class AccountDataManage: NSObject {
         }
     }
     
-    ///删除旧头像
-    func deleteOldUserIcon(iconUrl : String?){
-        if(iconUrl == nil || iconUrl == ""){ return }
-        BmobFile.filesDeleteBatch(with: [iconUrl!]) { (fileArray, isSuccess, error) in
+    ///删除旧文件
+    func deleteOldFile(fileUrl : String?){
+        if(fileUrl == nil || fileUrl == ""){ return }
+        BmobFile.filesDeleteBatch(with: [fileUrl!]) { (fileArray, isSuccess, error) in
             if(isSuccess == true &&  error == nil ){
-                print("删除头像成功！")
+                print("删除文件成功！")
             }
         }
     }
     
     
-    //MARK: - EditInfoDetailViewController
+    //MARK: - EditInfoDetailViewController (编辑用户信息详情)
 
     ///修改名字
     func modifyUserName(newName : String , complent : ((Bool,String) -> Void)!){
@@ -159,9 +159,9 @@ class AccountDataManage: NSObject {
             if(isSuccess == true && error == nil){
                 self.userModel.name=newName
                 Utils.savaUserInfo(userModel: self.userModel)
-                complent (true,"修改成功！")
+                complent (true,"保存成功！")
             }else{
-                complent (false,"修改姓名失败！")
+                complent (false,"保存失败！")
             }
         }
         
@@ -176,9 +176,9 @@ class AccountDataManage: NSObject {
             if(isSuccess == true && error == nil){
                 self.userModel.motto=newMotto
                 Utils.savaUserInfo(userModel: self.userModel)
-                complent (true,"修改成功！")
+                complent (true,"保存成功！")
             }else{
-                complent (false,"修改座右铭失败！")
+                complent (false,"保存失败！")
             }
         }
         
@@ -219,13 +219,14 @@ class AccountDataManage: NSObject {
         
     }
     
-    //MARK: - NotepadViewController
+    //MARK: - NotepadViewController (日记本)
     
     ///获取日记本
     func getNotepad(complent : ((Bool,String,Array<NotepadModel>) -> Void)!){
         
         let query : BmobQuery = BmobQuery.init(className: LIST_NOTEPADLIST)
         query.whereKey("userObjectId", equalTo: self.userModel.objectId)
+        query.order(byDescending: "createdAt")
         query.findObjectsInBackground({ (array, error) in
             if(array != nil && array!.count > 0 && error == nil){
                 var resultArray : Array<NotepadModel> = Array.init()
@@ -242,11 +243,11 @@ class AccountDataManage: NSObject {
         
     }
     
-    //MARK: - NotepadAddViewController
+    //MARK: - NotepadAddViewController  (添加日记本)
     
     ///添加日记本
     func addNotepad(notepadModel : NotepadModel , complent : ((Bool,String) -> Void)!){
-        
+    
         let object : BmobObject = BmobObject.init(className: LIST_NOTEPADLIST)
         object.setObject(self.userModel.objectId, forKey: "userObjectId")
         object.setObject(notepadModel.notepadName, forKey: "notepadName")
@@ -255,14 +256,105 @@ class AccountDataManage: NSObject {
         object.setObject(notepadModel.imageUrl, forKey: "imageUrl")
         object.saveInBackground { (isSuccess, error) in
             if(isSuccess && error == nil){
-                
-                complent(true,"添加成功")
+                complent(true,"添加成功！")
             }else{
-                complent(false,"添加失败")
+                complent(false,"添加失败！")
             }
         }
         
     }
     
+    //MARK: - NotepadEditViewController (编辑日记本)
     
+    ///删除日记本
+    func deleteNotepad(notepadModel : NotepadModel , complent : ((Bool,String) -> Void)!){
+        
+        let group : DispatchGroup = DispatchGroup.init()
+        let queue = DispatchQueue.global()
+        
+        group.enter()
+        queue.async {
+            
+            let query : BmobQuery = BmobQuery.init(className: LIST_DIARYLIST)
+            query.whereKey("notepadObjectId", equalTo: notepadModel.objectId)
+            query.findObjectsInBackground({ (array, error) in
+                if((array == nil || array!.count == 0) && error == nil){
+                    group.leave()
+                }else{
+                    complent(false,"日记本没有日记才能删除！")
+                }
+            })
+            
+        }
+        
+        group.notify(queue: queue) {
+            let object : BmobObject = BmobObject.init(outDataWithClassName: LIST_NOTEPADLIST, objectId: notepadModel.objectId)
+            object.deleteInBackground({ (isSuccess, error) in
+                if(isSuccess == true && error == nil){
+                    complent(true,"删除日记本成功！")
+                }else{
+                    complent(false,"删除日记本失败！")
+                }
+            })
+            
+        }
+    }
+    
+    ///修改日记本
+    func updateNotepad(notepadModel : NotepadModel , complent : ((Bool,String) -> Void)!){
+        
+        let change : BmobObject = BmobObject.init(outDataWithClassName: LIST_NOTEPADLIST, objectId: notepadModel.objectId)
+        change.setObject(notepadModel.notepadName, forKey: "notepadName")
+        change.setObject(notepadModel.isPrivate, forKey: "isPrivate")
+        change.updateInBackground { (isSuccess, error) in
+            if(isSuccess == true && error == nil){
+                complent (true,"保存成功！")
+            }else{
+                complent (false,"保存失败！")
+            }
+        }
+        
+    }
+    
+    ///修改日记封面
+    func updateImageNotepad(image : UIImage , notepadModel : NotepadModel , complent : ((Bool,String) -> Void)!){
+        
+        if(image.size.width <= 0 || image.size.height<=0 ){
+            complent(false,"上传失败！")
+            return
+        }
+        
+        let group : DispatchGroup = DispatchGroup.init()
+        let queue = DispatchQueue.global()
+        
+        let updateData : Data = UIImagePNGRepresentation(image)!
+        let nNotepadImage : String = "\(arc4random()%9999)_\(self.userModel.email!)_notepadImage.png"
+        let bmobFile : BmobFile = BmobFile.init(fileName: nNotepadImage, withFileData: updateData)
+        group.enter()
+        queue.async {
+            bmobFile.saveInBackground { (isSuccess, errer) in
+                if(isSuccess == true && errer == nil){
+                    group.leave()
+                }else{
+                    complent(false,"上传失败！")
+                }
+            }
+        }
+        
+        group.notify(queue: queue) {
+            
+            let change : BmobObject = BmobObject.init(outDataWithClassName: LIST_NOTEPADLIST, objectId: notepadModel.objectId)
+            change.setObject(bmobFile.url, forKey: "imageUrl")
+            change.updateInBackground { (isSuccess, error) in
+                if(isSuccess == true && error == nil){
+                    self.deleteOldFile(fileUrl: notepadModel.imageUrl)
+                    complent(true,"修改封面成功！")
+                }else{
+                    self.deleteOldFile(fileUrl: bmobFile.url)
+                    complent(false,"修改封面失败！")
+                }
+            }
+        }
+        
+    }
 }

@@ -203,7 +203,8 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let tagVC = segue.destination as! EditInfoDetailViewController
             tagVC.editType = editType
             tagVC.savaComplentHandler = {
-                self.refreshNotification.postNotification(name: "AccountViewController", array: [1])
+                let notModel = NotificationManagerModel.init(name: "AccountViewController", tagArray: [1])
+                self.refreshNotification.postNotification(notModel: notModel)
                 self.configVarData()
                 self.tableView .reloadData()
             }
@@ -244,7 +245,8 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         accManage.updateUserIcon(image: images) { (isSuccess, reason) in
             if(isSuccess == true){
                 self.configVarData()
-                self.refreshNotification.postNotification(name: "AccountViewController", array: [1])
+                let notModel = NotificationManagerModel.init(name: "AccountViewController", tagArray: [1])
+                self.refreshNotification.postNotification(notModel: notModel)
                 SVProgressHUD.showSuccess(withStatus: reason)
             }else{
                 SVProgressHUD.showError(withStatus: reason)
@@ -252,11 +254,6 @@ class EditInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     
-    ///是否允许访问相机
-    func isAllowVistCamera() -> Bool{
-        
-        return true
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -50,4 +50,15 @@ class NotepadModel: NSObject {
         self.endDate=Utils.dateToString(date: (bmobObject.object(forKey: "endDate") as! Date))
     }
     
+    init(notepadModel : NotepadModel?){
+        super.init()
+        if(notepadModel == nil) {return}
+        self.objectId=notepadModel!.objectId
+        self.notepadName=notepadModel!.notepadName
+        self.isPrivate=notepadModel!.isPrivate
+        self.createdDate=notepadModel!.createdDate
+        self.imageUrl=notepadModel!.imageUrl
+        self.endDate=notepadModel!.endDate
+    }
+    
 }

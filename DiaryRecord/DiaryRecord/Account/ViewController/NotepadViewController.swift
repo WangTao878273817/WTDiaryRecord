@@ -13,12 +13,18 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
     
     var notepadModelArray : Array<NotepadModel> = Array.init()
     
+    let notManage : NotificationManager = NotificationManager.share
     let accManage : AccountDataManage = AccountDataManage.share
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configViewCotroller()
         self.getNotepadRequest()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.popRefresh()
     }
     
     ///设置页面
@@ -75,6 +81,17 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
             }
         }
         
+    }
+    
+    ///返回刷新
+    func popRefresh(){
+        self.notManage.addObservers(vcName: "NotepadViewController") { (array) in
+            for item in array {
+                if(item == 1){
+                    self.getNotepadRequest()
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

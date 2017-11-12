@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotepadEditViewController: UIViewController,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate {
+class NotepadEditViewController : UIViewController,UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate {
 
     @IBOutlet weak var nameTxf: UITextField!
     @IBOutlet weak var priSwitch: UISwitch!

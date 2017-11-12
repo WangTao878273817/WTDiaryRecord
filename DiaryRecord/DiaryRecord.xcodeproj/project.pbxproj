@@ -12,10 +12,10 @@
 		043BBD521FB1E08300D9949C /* NotepadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043BBD511FB1E08300D9949C /* NotepadViewController.swift */; };
 		043BBD541FB1E4E100D9949C /* NotepadCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043BBD531FB1E4E100D9949C /* NotepadCollectionViewCell.swift */; };
 		047BEBF21FB33933008727D2 /* NotepadAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047BEBF11FB33932008727D2 /* NotepadAddViewController.swift */; };
+		04C9BA7F1FB882630069D217 /* NotepadDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9BA7E1FB882630069D217 /* NotepadDetailViewController.swift */; };
 		0CC480B88AB0D09A7E5B7416 /* Pods_DiaryRecord.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F1CA244A6A877A1AB9C0B35 /* Pods_DiaryRecord.framework */; };
 		7857919D1FA70EE300A60D14 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7857919C1FA70EE300A60D14 /* MainTabbarController.swift */; };
 		7857919F1FA7221300A60D14 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7857919E1FA7221200A60D14 /* Home.storyboard */; };
-		786D3EA61FB572A500D25DCC /* NotepadDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D3EA51FB572A500D25DCC /* NotepadDetailViewController.swift */; };
 		786D3EA81FB57B8B00D25DCC /* NotepadEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D3EA71FB57B8B00D25DCC /* NotepadEditViewController.swift */; };
 		787383FF1FAAEC640050098A /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787383FE1FAAEC640050098A /* EditInfoViewController.swift */; };
 		787384021FAB03EF0050098A /* AccountInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787384011FAB03EF0050098A /* AccountInfoTableViewCell.swift */; };
@@ -42,11 +42,11 @@
 		043BBD531FB1E4E100D9949C /* NotepadCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadCollectionViewCell.swift; sourceTree = "<group>"; };
 		04704C721FB48DC000DAA7D3 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		047BEBF11FB33932008727D2 /* NotepadAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadAddViewController.swift; sourceTree = "<group>"; };
+		04C9BA7E1FB882630069D217 /* NotepadDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadDetailViewController.swift; sourceTree = "<group>"; };
 		4245539A61A2CFE1ECF6A8B8 /* Pods-DiaryRecord.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryRecord.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryRecord/Pods-DiaryRecord.debug.xcconfig"; sourceTree = "<group>"; };
 		5BC8514AC76B07E11E5C2931 /* Pods-DiaryRecord.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryRecord.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiaryRecord/Pods-DiaryRecord.release.xcconfig"; sourceTree = "<group>"; };
 		7857919C1FA70EE300A60D14 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		7857919E1FA7221200A60D14 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
-		786D3EA51FB572A500D25DCC /* NotepadDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadDetailViewController.swift; sourceTree = "<group>"; };
 		786D3EA71FB57B8B00D25DCC /* NotepadEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotepadEditViewController.swift; sourceTree = "<group>"; };
 		787383FE1FAAEC640050098A /* EditInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoViewController.swift; sourceTree = "<group>"; };
 		787384011FAB03EF0050098A /* AccountInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,8 +101,8 @@
 				78C2278A1FAC53DA00544EA5 /* EditInfoDetailViewController.swift */,
 				043BBD511FB1E08300D9949C /* NotepadViewController.swift */,
 				047BEBF11FB33932008727D2 /* NotepadAddViewController.swift */,
-				786D3EA51FB572A500D25DCC /* NotepadDetailViewController.swift */,
 				786D3EA71FB57B8B00D25DCC /* NotepadEditViewController.swift */,
+				04C9BA7E1FB882630069D217 /* NotepadDetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -389,6 +389,7 @@
 				78863CED1FA1E0250040B1B8 /* LoginDataManage.swift in Sources */,
 				78C2278B1FAC53DA00544EA5 /* EditInfoDetailViewController.swift in Sources */,
 				78CB61601FA0370E00A36F13 /* LoginViewController.swift in Sources */,
+				04C9BA7F1FB882630069D217 /* NotepadDetailViewController.swift in Sources */,
 				78D607B31FA0AEE600B85611 /* CALayer_ConfigColor.swift in Sources */,
 				78863CEF1FA2FEB30040B1B8 /* Utils.swift in Sources */,
 				787383FF1FAAEC640050098A /* EditInfoViewController.swift in Sources */,
@@ -396,7 +397,6 @@
 				7857919D1FA70EE300A60D14 /* MainTabbarController.swift in Sources */,
 				042131801FA768280099B8A4 /* AccountViewController.swift in Sources */,
 				788690AB1FA9C03200BBCB82 /* AccountDataManage.swift in Sources */,
-				786D3EA61FB572A500D25DCC /* NotepadDetailViewController.swift in Sources */,
 				7888CF6A1F9F1374006C5CB1 /* AppDelegate.swift in Sources */,
 				78863CEB1FA1CED90040B1B8 /* UserModel.swift in Sources */,
 				786D3EA81FB57B8B00D25DCC /* NotepadEditViewController.swift in Sources */,

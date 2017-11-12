@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -595,13 +595,12 @@
                     <navigationItem key="navigationItem" title="日记本详情" id="Drf-dO-zli">
                         <barButtonItem key="leftBarButtonItem" image="account_back_icon" id="IFS-bJ-J58">
                             <connections>
-                                <action selector="backBtnClick:" destination="O88-l5-D5d" id="8hy-5P-7Nq"/>
+                                <action selector="backBtnClick:" destination="O88-l5-D5d" id="925-XQ-VXb"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="account_notepad_setting_icon" id="FIp-3s-Cb0">
                             <connections>
-                                <action selector="settingBtnClick:" destination="O88-l5-D5d" id="Woq-0A-RA2"/>
-                                <segue destination="yRz-75-Pgk" kind="push" identifier="notepadEditSegue" id="vvV-1I-ZJG"/>
+                                <segue destination="yRz-75-Pgk" kind="push" id="wWL-Wt-3vU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

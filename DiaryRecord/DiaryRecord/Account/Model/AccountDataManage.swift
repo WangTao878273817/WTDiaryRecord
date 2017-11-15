@@ -96,7 +96,6 @@ class AccountDataManage: NSObject {
         
         let group : DispatchGroup = DispatchGroup.init()
         let queue = DispatchQueue.global()
-        var result : Bool = false
         
         let updateData : Data = UIImagePNGRepresentation(image)!
         let nUserIcon : String = "\(arc4random()%9999)_\(self.userModel.email!)_userIcon.png"
@@ -105,27 +104,24 @@ class AccountDataManage: NSObject {
         queue.async {
             bmobFile.saveInBackground { (isSuccess, errer) in
                 if(isSuccess == true && errer == nil){
-                    result = true
+                    group.leave()
                 }else{
-                    result = false
+                    complent(false,"修改头像失败！")
                 }
-                group.leave()
+                
             }
         }
         
         let change : BmobObject = BmobObject.init(outDataWithClassName: LIST_USERLIST, objectId: self.userModel.objectId)
         
         group.notify(queue: queue) {
-            if(result == false) {
-                complent(false,"上传失败！")
-                return
-            }
             change.setObject(bmobFile.url, forKey: "imageUrl")
             change.updateInBackground { (isSuccess, error) in
                 if(isSuccess == true && error == nil){
                     self.deleteOldFile(fileUrl: self.userModel.imageUrl)
                     self.userModel.imageUrl = bmobFile.url
                     Utils.savaUserInfo(userModel: self.userModel)
+                    self.batchUpdateDiary(keyStr: "userObjectId", objectStr: self.userModel.objectId!, paramDic: ["userImageUrl":bmobFile.url])
                     complent(true,"修改头像成功！")
                 }else{
                     self.deleteOldFile(fileUrl: bmobFile.url)
@@ -133,19 +129,9 @@ class AccountDataManage: NSObject {
                 }
                 
             }
-            
         }
     }
     
-    ///删除旧文件
-    func deleteOldFile(fileUrl : String?){
-        if(fileUrl == nil || fileUrl == ""){ return }
-        BmobFile.filesDeleteBatch(with: [fileUrl!]) { (fileArray, isSuccess, error) in
-            if(isSuccess == true &&  error == nil ){
-                print("删除文件成功！")
-            }
-        }
-    }
     
     
     //MARK: - EditInfoDetailViewController (编辑用户信息详情)
@@ -159,6 +145,7 @@ class AccountDataManage: NSObject {
             if(isSuccess == true && error == nil){
                 self.userModel.name=newName
                 Utils.savaUserInfo(userModel: self.userModel)
+                self.batchUpdateDiary(keyStr: "userObjectId", objectStr: self.userModel.objectId!, paramDic: ["userName":newName])
                 complent (true,"保存成功！")
             }else{
                 complent (false,"保存失败！")
@@ -243,6 +230,29 @@ class AccountDataManage: NSObject {
         
     }
     
+    //MARK : - NotepadDetailViewController  (日记本详情-列表)
+    func getDiaryList(notepadModel : NotepadModel , complent : ((Bool,String,Array<DiaryModel>) -> Void)!){
+        
+        let query : BmobQuery = BmobQuery.init(className: LIST_DIARYLIST)
+        query.whereKey("notepadObjectId", equalTo: notepadModel.objectId)
+        query.order(byDescending: "createdAt")
+        query.limit = 50
+        query.findObjectsInBackground({ (array, error) in
+            if(array != nil && array!.count > 0 && error == nil){
+                var resultArray : Array<DiaryModel> = Array.init()
+                for item in array! {
+                    let newItem : BmobObject = item as! BmobObject
+                    let model : DiaryModel = DiaryModel.init(bmobObject: newItem)
+                    resultArray.append(model)
+                }
+                complent(true,"",resultArray)
+            }else{
+                complent(false,"没",Array.init())
+            }
+        })
+        
+    }
+    
     //MARK: - NotepadAddViewController  (添加日记本)
     
     ///添加日记本
@@ -308,6 +318,7 @@ class AccountDataManage: NSObject {
         change.setObject(notepadModel.isPrivate, forKey: "isPrivate")
         change.updateInBackground { (isSuccess, error) in
             if(isSuccess == true && error == nil){
+                self.batchUpdateDiary(keyStr: "notepadObjectId", objectStr: notepadModel.objectId!, paramDic: ["notepadName":notepadModel.notepadName!,"isPrivate":notepadModel.isPrivate!])
                 complent (true,"保存成功！")
             }else{
                 complent (false,"保存失败！")
@@ -357,4 +368,40 @@ class AccountDataManage: NSObject {
         }
         
     }
+    
+    
+    //MARK: - public method
+    
+    ///删除旧文件
+    func deleteOldFile(fileUrl : String?){
+        if(fileUrl == nil || fileUrl == ""){ return }
+        BmobFile.filesDeleteBatch(with: [fileUrl!]) { (fileArray, isSuccess, error) in
+            if(isSuccess == true &&  error == nil ){
+                print("删除文件成功！")
+            }
+        }
+    }
+    
+    ///批量修改日记信息
+    func batchUpdateDiary(keyStr : String , objectStr : String , paramDic : Dictionary<String,String>){
+        let query : BmobQuery = BmobQuery.init(className: LIST_DIARYLIST)
+        query.whereKey(keyStr, equalTo: objectStr)
+        query.order(byDescending: "createdAt")
+        query.limit = 50
+        query.findObjectsInBackground({ (array, error) in
+            if(array != nil && array!.count > 0 && error == nil){
+                let batch : BmobObjectsBatch = BmobObjectsBatch.init()
+                for item in array!{
+                    let newItem : BmobObject = item as! BmobObject
+                    batch.updateBmobObject(withClassName: LIST_DIARYLIST, objectId: (newItem.object(forKey: "objectId") as? String), parameters: paramDic)
+                }
+                batch.batchObjects(inBackground: { (array, error) in
+                    if(array != nil && array!.count > 0 && error == nil) {print("批量修改日记成功")}
+                })
+               
+            }
+        })
+        
+    }
+    
 }

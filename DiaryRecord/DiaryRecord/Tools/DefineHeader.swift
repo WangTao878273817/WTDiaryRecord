@@ -17,6 +17,7 @@ let USERDEFAUTS : UserDefaults = UserDefaults.standard
 let NOTIFICATIONCENTER = NotificationCenter.default
 let USERDEFAUTS_KEY_USERMODEL :String = "UserModel"
 let VIEW_BGCOLOR :UIColor = UIColor.init(red: 246/255.0, green: 246/255.0, blue: 246/255.0, alpha: 1)
+let DIARY_TEXTCOLOR :UIColor = UIColor.init(red: 80/255.0, green: 80/255.0, blue: 80/255.0, alpha: 1)
 
 ///SDK Key
 let BMOB_KEY : String = "024446707f380bbb8af746331b051cd8"

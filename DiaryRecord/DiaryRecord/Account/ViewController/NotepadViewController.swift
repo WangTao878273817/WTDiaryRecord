@@ -58,8 +58,8 @@ class NotepadViewController: UIViewController,UICollectionViewDelegate,UICollect
             cell.pageImage.sd_setImage(with: URL.init(string: notepadModel.imageUrl!), placeholderImage: UIImage.init(named: "account_notepad"), completed: nil)
         }
         let dateStr : String = (Utils.judgeCurrutDateInTwoDate(startDateStr: notepadModel.createdDate!, endDateStr: notepadModel.endDate!) == true ? "未过期" : "已过期")
-        let startStr : String = Utils.newStringDate(dateStr: notepadModel.createdDate!)
-        let endStr : String = Utils.newStringDate(dateStr: notepadModel.endDate!)
+        let startStr : String = Utils.newStringDate(dateStr: notepadModel.createdDate!, format: "yyyy-MM-dd")
+        let endStr : String = Utils.newStringDate(dateStr: notepadModel.endDate!, format: "yyyy-MM-dd")
         cell.describeLab.text = "\(dateStr)\n\(startStr)至\(endStr)"
         cell.privateLab.isHidden = (notepadModel.isPrivate == "0")
         

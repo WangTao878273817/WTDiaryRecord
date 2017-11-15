@@ -79,13 +79,13 @@ class Utils: NSObject {
         
     }
     
-    ///String类型时间取 年月日(yyyy-MM-dd)
-    static func newStringDate(dateStr : String) -> String{
+    ///String类型时间取 自定义获取类型(yyyy-MM-dd)
+    static func newStringDate(dateStr : String , format : String) -> String{
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let date = dateFormatter.date(from: dateStr)
-        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.dateFormat = format
         let resultStr = dateFormatter.string(from: date!)
         return resultStr
     }
@@ -122,5 +122,32 @@ class Utils: NSObject {
         
     }
     
+    ///计算文本高度 （宽度固定）
+    static func calculateTextHeight (text :String? , width : CGFloat , font : UIFont) -> CGFloat {
+        
+        if(text == nil || text == ""){return 20.0}
+        let newText : NSString = text! as NSString
+        let size = CGSize.init(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let rect =  newText.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font : font], context: nil);
+        return (rect.height < 20.0 ? 20.0 : rect.height)
+    }
+    
+    ///计算图片高度
+    static func calculateImageSize(diaryModel : DiaryModel) -> CGSize {
+        
+        if(diaryModel.imageUrl == nil || diaryModel.imageUrl == "" ){
+            return CGSize.init(width: 0, height: 0)
+        }
+        let width : CGFloat = SCREEN_WIDTH * 0.6
+        let oldImageWith : CGFloat = CGFloat.init(Double(diaryModel.imageWidth!)!)
+        let oldImageHeight : CGFloat = CGFloat.init(Double(diaryModel.imageHeight!)!)
+        if(oldImageWith < width){
+            return CGSize.init(width: oldImageWith, height: oldImageHeight)
+        }
+        let newImageHeight = oldImageHeight/oldImageWith*width
+        return CGSize.init(width: width, height: newImageHeight)
+        
+    }
+
     
 }

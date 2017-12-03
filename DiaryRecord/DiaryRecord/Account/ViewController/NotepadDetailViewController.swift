@@ -13,7 +13,9 @@ class NotepadDetailViewController: UIViewController,UITableViewDelegate,UITableV
     @IBOutlet weak var tableview: UITableView!
     
     var notepadModel : NotepadModel = NotepadModel.init()
-    var dairyArrayList : Array<DiaryModel> = Array.init()
+    var diaryGourpList : Array<(String,Any)> = Array.init()
+    
+    var lastDate : String = ""
     
     let accManage = AccountDataManage.share
     let notManage = NotificationManager.share
@@ -32,29 +34,34 @@ class NotepadDetailViewController: UIViewController,UITableViewDelegate,UITableV
         
     }
     
+    ///配置初始化数据
+    func configViewControllerData(){
+        
+        self.title = "《\(self.notepadModel.notepadName!)》"
+        
+    }
+    
     //MARK: - TableView Delegate And DataSource
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return self.getHeaderView(section: section)
+        return self.getHeaderView(str: self.diaryGourpList[section].0)
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return (section != 1 ? 30 : 0.1)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.01
+        return 30
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.dairyArrayList.count
+        return self.diaryGourpList.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        let itemArray : Array<DiaryModel> = self.diaryGourpList[section].1 as! Array
+        return itemArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model : DiaryModel = self.dairyArrayList[indexPath.section]
+        let itemArray : Array<DiaryModel> = self.diaryGourpList[indexPath.section].1 as! Array
+        let model : DiaryModel = itemArray[indexPath.row]
         let height = self.calculateCellHeight(model: model)
         return height
     }
@@ -64,17 +71,15 @@ class NotepadDetailViewController: UIViewController,UITableViewDelegate,UITableV
         if(cell == nil){
             cell = DiaryTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "cells")
         }
-        let model = self.dairyArrayList[indexPath.section]
+        let itemArray : Array<DiaryModel> = self.diaryGourpList[indexPath.section].1 as! Array
+        let model = itemArray[indexPath.row]
         cell!.cellData = (DiaryTableViewCellStyle.List , model)
         
         return cell!
     }
     
-    ///配置初始化数据
-    func configViewControllerData(){
-        
-        self.title = "《\(self.notepadModel.notepadName!)》"
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "pushDiaryDetailIdentifier", sender: self)
     }
     
     @IBAction func backBtnClick(_ sender: Any) {
@@ -87,7 +92,7 @@ class NotepadDetailViewController: UIViewController,UITableViewDelegate,UITableV
         SVProgressHUD.show(withStatus: "加载中...")
         accManage.getDiaryList(notepadModel: self.notepadModel) { (isSuccess, reason, array) in
             if(isSuccess == true){
-                self.dairyArrayList = array
+                self.diaryToGroup(array: array)
                 self.tableview.reloadData()
                 SVProgressHUD.dismiss()
             }else{
@@ -115,6 +120,14 @@ class NotepadDetailViewController: UIViewController,UITableViewDelegate,UITableV
             let tagVC = segue.destination as! NotepadEditViewController
             tagVC.notepadModel = self.notepadModel
             
+        }else if(segue.destination is DiaryDetailViewController){
+            
+            let indexPaths =  self.tableview.indexPathsForSelectedRows
+            let indexPath : IndexPath = indexPaths![0]
+            let itemArray : Array<DiaryModel> = self.diaryGourpList[indexPath.section].1 as! Array
+            let tagVC = segue.destination as! DiaryDetailViewController
+            tagVC.diaryModel = itemArray[indexPath.row]
+            
         }
     }
     
@@ -129,20 +142,43 @@ class NotepadDetailViewController: UIViewController,UITableViewDelegate,UITableV
         return CGFloat.init(topHeight + detailHeight + imageHeight + bootHeight)
     }
     
+
+    
     ///需要显示的HeaderView
-    func getHeaderView(section : Int) -> UIView {
+    func getHeaderView(str : String) -> UIView {
         
         let bgView : UIView = UIView.init()
         bgView.backgroundColor = UIColor.groupTableViewBackground
         
         let dateLab : UILabel = UILabel.init()
         dateLab.frame = CGRect.init(x: 20, y: 0, width: SCREEN_WIDTH, height: 30)
-        dateLab.text = "今天"
+        dateLab.text = str
         dateLab.textColor = UIColor.darkGray
         dateLab.font = UIFont.systemFont(ofSize: 15)
         bgView.addSubview(dateLab)
         
         return bgView
+    }
+    
+    ///日记分组
+    func diaryToGroup(array : Array<DiaryModel>){
+        var lastDate : String = ""
+        var currutArray : Array<DiaryModel> = Array.init()
+        for item in array{
+            let currutDate = item.createdAt
+            if(Utils.judegSecondDateIsDay(oneDate: lastDate, twoDate: currutDate!) == true) {
+                currutArray.append(item)
+                let count : Int = self.diaryGourpList.count
+                var currutBody = self.diaryGourpList.last
+                currutBody!.1 = currutArray
+                self.diaryGourpList[count-1] = currutBody!
+            }else{
+                lastDate = item.createdAt!
+                currutArray = Array.init()
+                currutArray.append(item)
+                self.diaryGourpList.append((Utils.switchDate(dateStr: lastDate),currutArray))
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

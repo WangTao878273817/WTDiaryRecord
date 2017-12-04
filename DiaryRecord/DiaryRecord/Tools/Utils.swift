@@ -64,7 +64,6 @@ class Utils: NSObject {
         
     }
 
-    
     ///判断当前时间是否在两个时间中间
     static func judgeCurrutDateInTwoDate(startDateStr : String , endDateStr : String) -> Bool{
         
@@ -79,6 +78,16 @@ class Utils: NSObject {
         
     }
     
+    ///判断两个时间字符串是不是同一天
+    static func judegSecondDateIsDay(oneDate : String , twoDate : String) -> Bool{
+        
+        if(oneDate.isEmpty || oneDate == "" || twoDate.isEmpty || twoDate == ""){return false}
+        let one = Utils.stringToDate(dateStr: oneDate)
+        let two = Utils.stringToDate(dateStr: twoDate)
+        
+        return Calendar.current.isDate(one, inSameDayAs: two)
+    }
+    
     ///String类型时间取 自定义获取类型(yyyy-MM-dd)
     static func newStringDate(dateStr : String , format : String) -> String{
         
@@ -90,7 +99,7 @@ class Utils: NSObject {
         return resultStr
     }
     
-    //获取当前时间加 x年x月x日 后的时间
+    ///获取当前时间加 x年x月x日 后的时间
     static func getPlusDate(year : Int , month : Int , day : Int) -> Date{
         
         let calendar : Calendar = Calendar.init(identifier: Calendar.Identifier.gregorian)
@@ -101,6 +110,18 @@ class Utils: NSObject {
         let resultDate = calendar.date(byAdding: com, to: Date.init())
         return resultDate!
         
+    }
+    
+    ///时间显示转换 比如是当前时间则显示为：今天
+    static func switchDate(dateStr : String) -> String{
+
+        let calendar = Calendar.current
+        let comp1 = calendar.dateComponents([.year,.month,.day], from: Utils.stringToDate(dateStr: dateStr))
+        let comp2 = calendar.dateComponents([.year,.month,.day], from: Date.init())
+        if(comp1.year != comp2.year){return "\(comp1.year!)"}
+        if(comp1.month != comp2.month){return "\(comp1.year!)年\(comp1.month!)月"}
+        if(comp1.day != comp2.day){return "\(comp1.month!)月\(comp1.day!)日"}
+        return "今天"
     }
     
     ///无条件弹窗

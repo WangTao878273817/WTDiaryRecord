@@ -230,7 +230,7 @@ class AccountDataManage: NSObject {
         
     }
     
-    //MARK : - NotepadDetailViewController  (日记本详情-列表)
+    //MARK: - NotepadDetailViewController  (日记本详情-列表)
     func getDiaryList(notepadModel : NotepadModel , complent : ((Bool,String,Array<DiaryModel>) -> Void)!){
         
         let query : BmobQuery = BmobQuery.init(className: LIST_DIARYLIST)
@@ -247,7 +247,7 @@ class AccountDataManage: NSObject {
                 }
                 complent(true,"",resultArray)
             }else{
-                complent(false,"没",Array.init())
+                complent(false,"没有日记",Array.init())
             }
         })
         
@@ -370,7 +370,7 @@ class AccountDataManage: NSObject {
     }
     
     
-    //MARK: - public method
+    //MARK: - 公共方法（文件操作）
     
     ///删除旧文件
     func deleteOldFile(fileUrl : String?){

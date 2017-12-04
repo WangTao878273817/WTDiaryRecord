@@ -24,6 +24,11 @@ class DiaryTableViewCell: UITableViewCell {
     var diaryImageBtn : UIButton = UIButton.init(type: UIButtonType.system)
     var commentImageView : UIImageView = UIImageView.init()
     var commentLab : UILabel = UILabel.init()
+    var lineView : UIView = UIView.init()
+    
+    private let top_magin : CGFloat = 15
+    private let sl_magin : CGFloat = 20
+    private let bl_magin : CGFloat = 60
     
     private var diaryModel : DiaryModel = DiaryModel.init()
     private var  _cellData : (DiaryTableViewCellStyle , DiaryModel) = (DiaryTableViewCellStyle.Nomal , DiaryModel.init())
@@ -47,28 +52,26 @@ class DiaryTableViewCell: UITableViewCell {
         
     }
     
-
-    
     ///初始化视图
     func configView(){
         self.selectionStyle = UITableViewCellSelectionStyle.none
         
-        self.userImageView.frame = CGRect.init(x: 10, y: 20, width: 40, height: 40)
+        self.userImageView.frame = CGRect.init(x: 10, y: top_magin, width: 40, height: 40)
         self.userImageView.layer.cornerRadius = 20
         self.userImageView.layer.masksToBounds = true
         self.userImageView.isHidden = true
         self.addSubview(self.userImageView)
         
-        self.userNameLab.frame = CGRect.init(x: 60, y: 20, width: 80, height: 20)
+        self.userNameLab.frame = CGRect.init(x: 60, y: top_magin, width: 80, height: 20)
         self.userNameLab.font = UIFont.systemFont(ofSize: 13)
         self.addSubview(self.userNameLab)
         
-        self.notepadNameLab.frame = CGRect.init(x: 140, y: 20, width: 80, height: 20)
-        self.notepadNameLab.font = UIFont.systemFont(ofSize: 11)
+        self.notepadNameLab.frame = CGRect.init(x: 140, y: top_magin, width: 120, height: 20)
+        self.notepadNameLab.font = UIFont.systemFont(ofSize: 13)
         self.notepadNameLab.textColor = UIColor.lightGray
         self.addSubview(self.notepadNameLab)
         
-        self.createdAtLab.frame = CGRect.init(x: SCREEN_WIDTH-50, y: 20, width: 40, height: 20)
+        self.createdAtLab.frame = CGRect.init(x: SCREEN_WIDTH-50, y: top_magin, width: 40, height: 20)
         self.createdAtLab.font = UIFont.systemFont(ofSize: 11)
         self.createdAtLab.textAlignment = NSTextAlignment.right
         self.createdAtLab.textColor = UIColor.lightGray
@@ -94,35 +97,55 @@ class DiaryTableViewCell: UITableViewCell {
         self.commentLab.font = UIFont.systemFont(ofSize: 11)
         self.addSubview(self.commentLab)
         
+        self.lineView.frame = CGRect.init(x: 10, y: 510, width: SCREEN_WIDTH-20, height: 1)
+        self.lineView.backgroundColor = UIColor.lightGray
+        
     }
     
     ///设置显示
     func settingDisplay(){
         
-        
         let imageSize : CGSize = Utils.calculateImageSize(diaryModel: self.diaryModel)
+        let commentY :CGFloat = (imageSize.height == 0 || imageSize.height == 0) ? 10 : 20
         
         switch self.cellData.0 {
         case DiaryTableViewCellStyle.List:
+            
             self.userImageView.isHidden = true
             self.userNameLab.isHidden = true
             self.notepadNameLab.isHidden = true
-            self.createdAtLab.frame = CGRect.init(x: 20, y: 20, width: 80, height: 20)
+            self.createdAtLab.frame = CGRect.init(x: sl_magin, y: top_magin, width: 80, height: 20)
             self.createdAtLab.textAlignment = NSTextAlignment.left
             let textHeight = Utils.calculateTextHeight(text: self.diaryModel.detail, width: SCREEN_WIDTH-40, font: UIFont.systemFont(ofSize: 15))
-            self.detailLab.frame = CGRect.init(x: 20, y: 40, width: SCREEN_WIDTH-40, height: textHeight)
-            let commentY :CGFloat = (imageSize.height == 0 || imageSize.height == 0) ? 10 : 20
+            self.detailLab.frame = CGRect.init(x: 20, y: 40, width: SCREEN_WIDTH-sl_magin*2, height: textHeight)
+            
             if(imageSize.height == 0 || imageSize.height == 0){
                 self.diaryImageBtn.isHidden = true
             }else{
                 self.diaryImageBtn.isHidden = false
-                self.diaryImageBtn.frame = CGRect.init(origin: CGPoint.init(x: 20, y: textHeight+50), size: imageSize)
+                self.diaryImageBtn.frame = CGRect.init(origin: CGPoint.init(x: sl_magin, y: textHeight+50), size: imageSize)
             }
-            self.commentImageView.frame = CGRect.init(x: 20, y: 40+textHeight+imageSize.height+commentY, width: 20, height: 20)
-            self.commentLab.frame = CGRect.init(x: 50, y: 40+textHeight+imageSize.height+commentY, width: 100, height: 20)
+            self.commentImageView.frame = CGRect.init(x: sl_magin, y: 40+textHeight+imageSize.height+commentY, width: 20, height: 20)
+            self.commentLab.frame = CGRect.init(x: sl_magin+30, y: 40+textHeight+imageSize.height+commentY, width: 100, height: 20)
             
             break
         case DiaryTableViewCellStyle.Detail:
+            
+            self.userImageView.isHidden = true
+            self.userNameLab.isHidden = true
+            self.notepadNameLab.textColor = UIColor.black
+            self.notepadNameLab.frame = CGRect.init(x: sl_magin, y: top_magin, width: 120, height: 20)
+            self.createdAtLab.frame = CGRect.init(x: SCREEN_WIDTH-100, y: top_magin, width: 80, height: 20)
+            self.createdAtLab.textAlignment = NSTextAlignment.right
+            let textHeight = Utils.calculateTextHeight(text: self.diaryModel.detail, width: SCREEN_WIDTH-40, font: UIFont.systemFont(ofSize: 15))
+            self.detailLab.frame = CGRect.init(x: sl_magin, y: 40, width: SCREEN_WIDTH-sl_magin*2, height: textHeight)
+            
+            if(imageSize.height == 0 || imageSize.height == 0){
+                self.diaryImageBtn.isHidden = true
+            }else{
+                self.diaryImageBtn.isHidden = false
+                self.diaryImageBtn.frame = CGRect.init(origin: CGPoint.init(x: sl_magin, y: textHeight+50), size: imageSize)
+            }
             
             break
         default:
@@ -130,7 +153,7 @@ class DiaryTableViewCell: UITableViewCell {
             break
         }
         
-        if(self.diaryModel.commentNum == nil || self.diaryModel.commentNum == "0" || self.diaryModel.commentNum == ""){
+        if(self.diaryModel.commentNum == nil || self.diaryModel.commentNum == "0" || self.diaryModel.commentNum == "" || self.cellData.0==DiaryTableViewCellStyle.Detail){
             self.commentImageView.isHidden = true
             self.commentLab.isHidden = true
         }else{
@@ -142,9 +165,12 @@ class DiaryTableViewCell: UITableViewCell {
     ///设置数据
     func settingData(){
         
-        self.userImageView.sd_setImage(with: URL.init(string: self.diaryModel.userImageUrl!), placeholderImage: UIImage.init(named: "account_default_icon"),  completed: nil)
+        if(self.diaryModel.userImageUrl?.isEmpty == false && self.diaryModel.userImageUrl != ""){
+            self.userImageView.sd_setImage(with: URL.init(string: self.diaryModel.userImageUrl!), placeholderImage: UIImage.init(named: "account_default_icon"),  completed: nil)
+        }
+        
         self.userNameLab.text = self.diaryModel.userName
-        self.notepadNameLab.text = self.diaryModel.notepadName
+        self.notepadNameLab.text = "《\(self.diaryModel.notepadName!)》"
         self.createdAtLab.text = Utils.newStringDate(dateStr: self.diaryModel.createdAt!, format: "HH:mm")
         self.detailLab.text = self.diaryModel.detail
         if(self.diaryModel.imageUrl != nil && self.diaryModel.imageUrl != ""){

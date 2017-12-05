@@ -25,6 +25,7 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
 
         self.configViewController()
         self.addKeyBoardNotification()
+        self.getCommentList()
     }
     
     ///configViewController
@@ -62,7 +63,7 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-        if(indexPath.row == 0){
+        if(indexPath.section == 0){
             return self.calculateCellHeight(model: self.diaryModel)
         }else{
             let cModel = self.commentArray[indexPath.row]
@@ -73,7 +74,7 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if(indexPath.row == 0){
+        if(indexPath.section == 0){
             let cell : DiaryTableViewCell = DiaryTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "DiaryTableViewCell")
             cell.cellData = (DiaryTableViewCellStyle.Detail,self.diaryModel)
             return cell
@@ -84,19 +85,37 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             let cModel : CommentModel = self.commentArray[indexPath.row]
             cell!.commentData = (cModel,self.isMeDiary)
-            
+            cell!.tag = indexPath.row
+            cell!.moreBtnHandler = { tag in
+                self.cellMoreClick(Tag: tag)
+            }
             return cell!
         }
     }
     
-    @IBAction func backBtnClick(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+    ///cell更多点击的弹窗
+    func cellMoreClick(Tag tag : Int){
+        let alertController : UIAlertController = UIAlertController.init(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        alertController.addAction(UIAlertAction.init(title: "删除回复", style: UIAlertActionStyle.destructive, handler: { (aa) in
+            let cm = self.commentArray[tag]
+            self.deleteComment(array: [cm])
+        }))
+        alertController.addAction(UIAlertAction.init(title: "取消", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func moreBtnClick(_ sender: Any) {
-        print("click more")
-    }
-    @IBAction func addComment(_ sender: Any) {
+    ///日记更多点击
+    func diaryMoreClick(){
+        
+        let isMe : Bool = (self.diaryModel.userObjectId == Utils.getUserInfo().objectId)
+        let showStr : String = (isMe ? "删除" : "举报")
+        
+        let alertController : UIAlertController = UIAlertController.init(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        alertController.addAction(UIAlertAction.init(title: showStr, style: UIAlertActionStyle.destructive, handler: { (aa) in
+            
+        }))
+        alertController.addAction(UIAlertAction.init(title: "取消", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     ///计算cell的高度 （Detail样式计算方式）
@@ -157,14 +176,56 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         if(self.putTxf.canResignFirstResponder){self.putTxf.resignFirstResponder()}
     }
     
+    @IBAction func backBtnClick(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    @IBAction func moreBtnClick(_ sender: Any) {
+        self.diaryMoreClick()
+    }
+    @IBAction func addComment(_ sender: Any) {
+        if(self.putTxf.text == "" || self.putTxf.text == nil){
+            SVProgressHUD.showError(withStatus: "评论内容不能为空!")
+            return
+        }
+        if(self.putTxf.canResignFirstResponder){self.putTxf.resignFirstResponder()}
+        self.addComment()
+    }
+    
+    //MARK: - request
     ///获取评论列表
     func getCommentList(){
-        SVProgressHUD.show(withStatus: "加载中...")
+
         accManager.getCommentList(diaryObjectId: self.diaryModel.objectId!) { (isSuccess, reason, array) in
             if(isSuccess){
                 self.commentArray = array
                 self.tableView.reloadData()
-                SVProgressHUD.dismiss()
+            }else{
+                SVProgressHUD.showError(withStatus: reason)
+            }
+        }
+    }
+    
+    ///添加日记评论
+    func addComment(){
+        SVProgressHUD.show(withStatus: "加载中...")
+        accManager.addComment(diaryObjectId: self.diaryModel.objectId!, detail: self.putTxf.text!) { (isSuccess, reason) in
+            if(isSuccess){
+                self.putTxf.text = ""
+                SVProgressHUD.showSuccess(withStatus: reason)
+                self.getCommentList()
+            }else{
+                SVProgressHUD.showError(withStatus: reason)
+            }
+        }
+    }
+    
+    ///删除评论
+    func deleteComment(array : Array<CommentModel>){
+        SVProgressHUD.show(withStatus: "加载中...")
+        accManager.deleteComment(idArray: array) { (isSuccess, reason) in
+            if(isSuccess){
+                SVProgressHUD.showSuccess(withStatus: reason)
+                self.getCommentList()
             }else{
                 SVProgressHUD.showError(withStatus: reason)
             }

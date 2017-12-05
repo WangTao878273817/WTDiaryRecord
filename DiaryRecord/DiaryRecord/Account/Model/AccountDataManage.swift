@@ -374,7 +374,7 @@ class AccountDataManage: NSObject {
     ///获取评论列表
     func getCommentList(diaryObjectId : String , complent : ((Bool,String,Array<CommentModel>) -> Void)!){
         
-        let query : BmobQuery = BmobQuery.init(className: LIST_NOTEPADLIST)
+        let query : BmobQuery = BmobQuery.init(className: LIST_COMMENTLIST)
         query.whereKey("diaryObjectId", equalTo: diaryObjectId)
         query.order(byDescending: "createdAt")
         query.findObjectsInBackground({ (array, error) in
@@ -390,6 +390,42 @@ class AccountDataManage: NSObject {
                 complent(false,"暂无品论！",Array.init())
             }
         })
+        
+    }
+    
+    ///添加日记评论
+    func addComment(diaryObjectId : String , detail : String , complent : ((Bool,String) -> Void)!){
+        
+        let object : BmobObject = BmobObject.init(className: LIST_COMMENTLIST)
+        object.setObject(self.userModel.objectId, forKey: "userObjectId")
+        object.setObject(self.userModel.name, forKey: "userName")
+        object.setObject(self.userModel.imageUrl, forKey: "userImageUrl")
+        object.setObject(diaryObjectId, forKey: "diaryObjectId")
+        object.setObject(detail, forKey: "detail")
+        object.saveInBackground { (isSuccess, error) in
+            if(isSuccess && error == nil){
+                complent(true,"添加成功！")
+            }else{
+                complent(false,"添加失败！")
+            }
+        }
+        
+    }
+    
+    ///删除一条或多条日记评论
+    func deleteComment(idArray : Array<CommentModel> , complent : ((Bool,String) -> Void)!){
+        
+        let batch : BmobObjectsBatch = BmobObjectsBatch.init()
+        for comment in idArray {
+            batch .deleteBmobObject(withClassName: LIST_COMMENTLIST, objectId: comment.objectId!)
+        }
+        batch.batchObjectsInBackground { (isSuccess, error) in
+            if(isSuccess && error == nil){
+                complent(true,"删除成功！")
+            }else{
+                complent(false,"删除失败！")
+            }
+        }
         
     }
     

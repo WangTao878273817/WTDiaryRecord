@@ -369,6 +369,29 @@ class AccountDataManage: NSObject {
         
     }
     
+    //MARK: -DiaryDetailViewController  （日记详情评论）
+    
+    ///获取评论列表
+    func getCommentList(diaryObjectId : String , complent : ((Bool,String,Array<CommentModel>) -> Void)!){
+        
+        let query : BmobQuery = BmobQuery.init(className: LIST_NOTEPADLIST)
+        query.whereKey("diaryObjectId", equalTo: diaryObjectId)
+        query.order(byDescending: "createdAt")
+        query.findObjectsInBackground({ (array, error) in
+            if(array != nil && array!.count > 0 && error == nil){
+                var resultArray : Array<CommentModel> = Array.init()
+                for item in array!{
+                    let newItem : BmobObject = item as! BmobObject
+                    let model : CommentModel = CommentModel.init(bmobObject: newItem)
+                    resultArray.append(model)
+                }
+                complent(true,"",resultArray)
+            }else{
+                complent(false,"暂无品论！",Array.init())
+            }
+        })
+        
+    }
     
     //MARK: - 公共方法（文件操作）
     

@@ -14,9 +14,11 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     @IBOutlet weak var putView: UIView!
     @IBOutlet weak var putTxf: UITextField!
     
+    let accManager : AccountDataManage = AccountDataManage.share
+    
     var diaryModel : DiaryModel = DiaryModel.init()
-    var dataArray : Array<Any> = Array.init()
-    var commentNum : Int = 0
+    var commentArray : Array<CommentModel> = Array.init()
+    var isMeDiary : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +29,8 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     ///configViewController
     func configViewController(){
+        
+        self.isMeDiary = (self.diaryModel.userObjectId == Utils.getUserInfo().objectId)
         
         self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.onDrag;
         
@@ -44,7 +48,7 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){return 1}
-        return self.dataArray.count
+        return self.commentArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -53,15 +57,18 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if(section == 0){return nil}
-        return self.getSectionView(num: self.commentNum)
+        return self.getSectionView(num: self.commentArray.count)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
         if(indexPath.row == 0){
             return self.calculateCellHeight(model: self.diaryModel)
+        }else{
+            let cModel = self.commentArray[indexPath.row]
+            let textHeight = Utils.calculateTextHeight(text: cModel.detail, width: SCREEN_WIDTH-75, font: UIFont.systemFont(ofSize: 15))
+            return (textHeight + 70)
         }
-        return 44
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,10 +76,16 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
         if(indexPath.row == 0){
             let cell : DiaryTableViewCell = DiaryTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "DiaryTableViewCell")
             cell.cellData = (DiaryTableViewCellStyle.Detail,self.diaryModel)
-            return cell;
+            return cell
         }else{
-            let cell : DiaryTableViewCell = DiaryTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "DiaryTableViewCell")
-            return cell;
+            var cell : CommentTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "CommentTableViewCell") as? CommentTableViewCell
+            if(cell == nil){
+                cell = CommentTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "CommentTableViewCell")
+            }
+            let cModel : CommentModel = self.commentArray[indexPath.row]
+            cell!.commentData = (cModel,self.isMeDiary)
+            
+            return cell!
         }
     }
     
@@ -142,6 +155,20 @@ class DiaryDetailViewController: UIViewController,UITableViewDelegate,UITableVie
     
     @objc func resignTxf(){
         if(self.putTxf.canResignFirstResponder){self.putTxf.resignFirstResponder()}
+    }
+    
+    ///获取评论列表
+    func getCommentList(){
+        SVProgressHUD.show(withStatus: "加载中...")
+        accManager.getCommentList(diaryObjectId: self.diaryModel.objectId!) { (isSuccess, reason, array) in
+            if(isSuccess){
+                self.commentArray = array
+                self.tableView.reloadData()
+                SVProgressHUD.dismiss()
+            }else{
+                SVProgressHUD.showError(withStatus: reason)
+            }
+        }
     }
     
     deinit {

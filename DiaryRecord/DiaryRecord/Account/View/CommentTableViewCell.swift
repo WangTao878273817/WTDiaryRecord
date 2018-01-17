@@ -16,6 +16,8 @@ class CommentTableViewCell: UITableViewCell {
     private var detailLab : UILabel = UILabel.init()
     private var moreBtn : UIButton = UIButton.init()
     
+    var moreBtnHandler : ((Int)->Void)?
+    
     private var _commentData : (CommentModel,Bool) = (CommentModel.init() , false)
     var commentData : (CommentModel,Bool){
         set{
@@ -52,7 +54,7 @@ class CommentTableViewCell: UITableViewCell {
         self.nameLab.font = UIFont.systemFont(ofSize: 13)
         self.addSubview(self.nameLab)
         
-        self.dateLab.frame = CGRect.init(x: SCREEN_WIDTH-50, y: 15, width: 40, height: 20)
+        self.dateLab.frame = CGRect.init(x: SCREEN_WIDTH-110, y: 15, width: 100, height: 20)
         self.dateLab.font = UIFont.systemFont(ofSize: 11)
         self.dateLab.textAlignment = NSTextAlignment.right
         self.dateLab.textColor = UIColor.lightGray
@@ -72,7 +74,9 @@ class CommentTableViewCell: UITableViewCell {
     }
     
     @objc func moreBtnClick(){
-        
+        if((self.moreBtnHandler) != nil){
+            self.moreBtnHandler!(self.tag)
+        }
     }
     
     ///设置模型数据
@@ -80,7 +84,7 @@ class CommentTableViewCell: UITableViewCell {
         
         self.titleImg.sd_setImage(with: URL.init(string: self.commentData.0.userImageUrl!), placeholderImage: UIImage.init(named: "account_default_icon"))
         self.nameLab.text = self.commentData.0.userName
-        self.dateLab.text = self.commentData.0.createdAt
+        self.dateLab.text = Utils.newStringDate(dateStr: self.commentData.0.createdAt!, format: "MM-dd HH:mm")
         let textHeight = Utils.calculateTextHeight(text: self.commentData.0.detail, width: SCREEN_WIDTH-60-15, font: UIFont.systemFont(ofSize: 15))
         self.detailLab.text = self.commentData.0.detail
         self.detailLab.frame = CGRect.init(x: 60, y: 40, width: SCREEN_WIDTH-60-15, height: textHeight)
